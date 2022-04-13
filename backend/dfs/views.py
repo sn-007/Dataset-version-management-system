@@ -169,5 +169,10 @@ class VersionList(APIView):
 def accept_dataset(request, datasetid):
     # TODO: decorate with permissions for route access
     if request.method == 'POST':
-        # TODO: remove temp dataset and modify it and add new dataset with new version and new publicaitons 
+        # TODO: remove temp dataset and modify it and add new dataset with new version and new publicaitons
+        temporary_dataset = Temporary_dataset.objects.get(id=datasetid)
+        dataset = {
+            
+        } 
+        return Response(Temporary_datasetSerializer(temporary_dataset).data)
         pass
