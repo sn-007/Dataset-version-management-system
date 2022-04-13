@@ -2,7 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route  
+  Route
 } from "react-router-dom";
 
 
@@ -12,27 +12,31 @@ import './App.css';
 import Approverejects from "./components/admin/Approverejects";
 import Mydatasets from './components/publisher/Mydatsets';
 import Newdatasetform from './components/publisher/Newdatasetform';
+import Datasetdisplay from './components/user/Datasetdisplay'
+import Datasetinfoview from './components/user/Datasetinfoview'
 
 function App() {
   return (
     <Router>
-      
-        <Routes>
-        
-        <Route path="/mydatasets"  element={ <Mydatasets />}/>
-        <Route path="/approve" element={<Approverejects />}/>
-        <Route path="/newdataset" element={<Newdatasetform />}/>
 
-        </Routes>
-        
+      <Routes>
+
+        <Route path="/mydatasets" element={<Mydatasets />} />
+        <Route path="/approve" element={<Approverejects />} />
+        <Route path="/newdataset" element={<Newdatasetform />} />
+        <Route path="/display" element={<Datasetdisplay />} />
+        <Route path="/viewinfo" element={<Datasetinfoview />} />
+
+      </Routes>
+
     </Router>
 
-    
-      
-      
-      
-      
-    
+
+
+
+
+
+
   );
 }
 
