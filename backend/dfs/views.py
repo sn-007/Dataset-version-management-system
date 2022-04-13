@@ -83,9 +83,8 @@ class DatasetDetail(APIView):
 class TempdatasetList(APIView):
 
     def get(self, request, format=None):
-
-        if request.query_params.get('status'):
-            status = request.query_params.get('status')
+        status = request.query_params.get('status', None)
+        if status:
             if status not in ['pending', 'requested']:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             temporary_datasets = Temporary_dataset.objects.filter(status=status)
@@ -141,8 +140,9 @@ class VersionList(APIView):
 
     def get(self, request, format=None):
 
-        if request.query_params.get('dataset'):
-            dataset = request.query_params.get('dataset')
+        dataset = request.query_params.get('dataset', None)
+
+        if dataset:
             try:
                 versions = Version.objects.filter(dataset=dataset)
                 versions = VersionSerializer(versions, many=True).data
