@@ -18,7 +18,7 @@ import Datasetslist from './Datasetslist';
 import SearchBar from './search'
 const commonStyles = {
 };
-export default function Datasetdisplay() {
+export default function Datasetsdisplayhome() {
     const datasets = [
         {
             'name': 'Dataset 1',
