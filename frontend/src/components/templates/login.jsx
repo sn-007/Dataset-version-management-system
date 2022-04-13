@@ -1,99 +1,100 @@
-import React, {useState} from 'react';
-import {Button} from '@mui/material';
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import React, { useState } from "react";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import { Box } from "@mui/system";
+import "./index.css";
+import {useNavigate} from "react-router-dom"
+
+
+import Button from "@mui/material/Button";
+
+const defaultValues = {
+    email: "",
+    password: "",
+};
+
+//login form for publisher and admin
+const Loginform = () => {
+    const [formValues, setFormValues] = useState(defaultValues);
+    let navigate = useNavigate();
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({
+            ...formValues,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(formValues);
+    };
+    
+    return (
+        <div className='FormContainer' >
+            <Box
+                component="img"
+                sx={{
+                    height: 200,
+                    width: 200,
+                    maxHeight: { xs: 233, md: 167 },
+                    maxWidth: { xs: 350, md: 250 },
+                    alignSelf: "center",
+                    
+                }}
+                src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
+            />
 
 
 
+            <form onSubmit={handleSubmit} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+                <Grid container alignItems="center" justify="center" display='flex' direction='column'>
+
+
+                    <TextField
+                        id="email-input"
+                        name="email"
+                        label="Email"
+                        type="email"
+                        variant='filled'
+                        value={formValues.email}
+                        onChange={handleInputChange}
+                        sx={{ width: '30%', margin: '10px' }}
+                    />
+
+                    <TextField
+                        id="password-input"
+                        name="password"
+                        label="Password"
+                        type="password"
+                        variant='filled'
+                        value={formValues.password}
+                        onChange={handleInputChange}
+                        sx={{ width: '30%', margin: '10px' }}
+                    />
+
+                    <div style ={{flexDirection:'row', display:'flex', marginTop:'5vh'}} >
+
+                    <Button variant="contained" color="primary" type="submit"sx={{marginRight:'20px', width:'7vw'}}>
+                        Login
+                    </Button>
+
+                    <Button variant="contained" color="primary" type="submit" sx={{marginLeft:'20px', width:'8vw'}} 
+                    onClick = { ()=>{navigate("/register",{}); } }
+                    >
+                        Register
+                    </Button>
 
 
 
+                    </div>
 
-// create a component to login form by taking inputs from username and password
-const Loginscreen = () => {
+                </Grid>
+            </form>
+        </div>
+    );
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  
-  
+};
 
-  const triggerLogin = () => {
-        
-  }
-
-
-
-  return (
-    <div>
-        <Box m={2}>
-            <FormControl fullWidth>
-                <InputLabel htmlFor="my-input">Email</InputLabel>
-                <Input
-
-                    id="my-input"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <AccountCircle />
-                        </InputAdornment>
-                    }
-                />
-            </FormControl>
-        </Box>
-        <Box m={2}>
-            <FormControl fullWidth>
-                <InputLabel htmlFor="my-input">Password</InputLabel>
-                <Input
-
-                    id="my-input"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <AccountCircle />
-                        </InputAdornment>
-                    }
-                />
-            </FormControl>
-        </Box>
-        <Box m={2}>
-            <Button variant="contained" color="primary" onClick={triggerLogin}>
-                Login
-            </Button>
-        </Box>
-      
-    </div>
-
-  );
-
-}
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     paddingTop: 15
-//   },
-
-//   logo: {
-//     height:200,
-//     width: 200,
-//   },
-
-//   input: {
-//     width:300,
-//     paddingBottom:5
-//   },
-
-//   button:{
-//     width:200,
-//     paddingBottom:10,
-//   }
-// });
-export default Loginscreen;
+export default Loginform;

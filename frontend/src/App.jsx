@@ -14,6 +14,8 @@ import Mydatasets from './components/publisher/Mydatsets';
 import Newdatasetform from './components/publisher/Newdatasetform';
 import Datasetsdisplayhome from './components/user/Datasetsdisplayhome'
 import Eachdatasetinfo from './components/user/Eachdatasetinfo'
+import Loginform from './components/templates/login';
+import Registerform from './components/templates/register';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/newdataset" element={<Newdatasetform />} />
         <Route path="/display" element={<Datasetsdisplayhome />} />
         <Route path="/viewinfo" element={<Eachdatasetinfo />} />
+        <Route path="/login" element={<Loginform />} />
+        <Route path="/register" element={<Registerform />} />
 
       </Routes>
 
