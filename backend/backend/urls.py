@@ -24,4 +24,6 @@ urlpatterns = [
     # path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('dfs.urls')),
-]
+    path('accounts/', include('django.contrib.auth.urls')),
+
+]   

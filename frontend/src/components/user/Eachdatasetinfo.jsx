@@ -4,11 +4,11 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Datasetinfo from './Datasetinfo';
+import Datasetversions from './Datasetversions';
 import Avatar from '@mui/material/Avatar';
 import { green, pink, blue } from '@mui/material/colors';
 import "./index.css";
-export default function Datasetinfoview() {
+export default function Eachdatasetinfo() {
     const datasets = [
         {
             'name': 'Dataset 1',
@@ -79,7 +79,7 @@ export default function Datasetinfoview() {
                             (dataset, index) => {
                                 console.log(dataset)
                                 return (
-                                    < Datasetinfo info={dataset} key={index} />
+                                    < Datasetversions info={dataset} key={index} />
                                 )
                             }
                         )
