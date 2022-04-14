@@ -7,10 +7,7 @@ from user import views
 from .custom_auth_token import CustomAuthToken
 
 
-router = DefaultRouter()
-
 urlpatterns = [
-    # path('', include(router.urls)),
     path('register/', views.User_register, name='register'),
     path('login/', views.User_login, name='login'),
     path('logout/', views.User_logout, name='logout'),

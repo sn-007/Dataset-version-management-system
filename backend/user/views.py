@@ -113,6 +113,7 @@ def User_login(request):
             data["first_name"] = account.first_name
             data["last_name"] = account.last_name
             data["group"] = str(account.groups)
+            data["id"] = account.id
             return Response(data)
         else:
             return Response({

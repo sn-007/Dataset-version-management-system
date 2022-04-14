@@ -1,11 +1,9 @@
 import django
 import os
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', './backend/settings.py')
-
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','backend.settings')
 
 django.setup()
-
 
 from django.contrib.auth.models import Group
 
