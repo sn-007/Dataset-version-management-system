@@ -86,7 +86,8 @@ DATABASES = {
         'NAME': 'dfsdb',
         'USER': 'dfsuser',
         'PASSWORD': 'DFSpassword_123',
-        'PORT': '3306',
+        'HOST': 'db',
+        'PORT': '3306'
     }
 }
 

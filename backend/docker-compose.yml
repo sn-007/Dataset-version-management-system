@@ -1,34 +1,23 @@
 version: "3"
 
 services:
-  mysql-db:
-    build:
-      context: .
-      dockerfile: ./docker/mysql/Dockerfile
-    volumes:
-      - mysql_data:/var/lib/mysql
-    restart: unless-stopped
-    env_file: .env
+  db:
+    image: mysql
     ports:
-      - "3306:3306"
-
-  backend:
-    build:
-      context: .
-      dockerfile: docker/django/Dockerfile
-    env_file: .env
-    restart: always
+      - '3306:3306'
+    environment:
+       MYSQL_DATABASE: 'dfsdb'
+       MYSQL_USER: 'dfsuser'
+       MYSQL_PASSWORD: 'DFSpassword_123'
+       MYSQL_ROOT_PASSWORD: 'password'
     volumes:
-      - .:/app/
-    depends_on:
-      - mysql-db
-    working_dir: "/app/backend"
-    expose:
-      - 8000
+      - ./db:/var/lib/mysql
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/my_app_dir
     ports:
       - "8000:8000"
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-volumes:
-  mysql_data:
-
+    depends_on:
+      - db

@@ -142,6 +142,9 @@ class TempdatasetList(APIView):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             temporary_datasets = temporary_datasets.filter(status=status)
 
+        if request.user.is_superuser:
+            temporary_datasets = temporary_datasets.filter(status='requested')
+
         if is_publisher:
             temporary_datasets = temporary_datasets.filter(
                 publisher=request.user)
@@ -153,7 +156,7 @@ class TempdatasetList(APIView):
 
     def post(self, request, format=None):
 
-        data = request.data
+        data = request.data.copy()
         data['publisher'] = request.user.id
 
         dataset_serializer = Temporary_datasetSerializer(data=data)
@@ -206,8 +209,11 @@ class TempdatasetDetail(APIView):
     def put(self, request, datasetid, format=None):
 
         dataset = self.get_object(datasetid, request.user)
+        # for key, value in request.data.items():
+        #     setattr(dataset, key, value)
+        serializer = Temporary_datasetSerializer(dataset, data=request.data)
+        # serializer = Temporary_dataset(dataset, request.user)
 
-        serializer = Temporary_dataset(dataset, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
