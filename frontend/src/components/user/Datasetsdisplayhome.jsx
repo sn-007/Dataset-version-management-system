@@ -13,12 +13,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Datasetslist from './Datasetslist';
+import {useNavigate} from "react-router-dom"
 
 // import SearchBar from 'material-ui-search-bar';
+
 import SearchBar from './search'
 const commonStyles = {
 };
 export default function Datasetsdisplayhome() {
+    let navigate = useNavigate();
     const datasets = [
         {
             'name': 'Dataset 1',
@@ -36,6 +39,23 @@ export default function Datasetsdisplayhome() {
             'date': '01/01/2020'
         }
     ]
+
+    React.useEffect(() => {
+        if (localStorage.getItem('user')) {
+            let user = JSON.parse(localStorage.getItem('user'));
+            console.log("user", user);
+            if (user.group === "admin") {
+                navigate("/approve");
+            } else if (user.group === "publisher") {
+                navigate("/mydatasets");
+            } else {
+                navigate("/display");
+            }
+        }
+    }, [navigate]);
+
+
+
     return (
         <div className="myDatasets">
             <div className="myDatasets-heading">
@@ -45,10 +65,23 @@ export default function Datasetsdisplayhome() {
             <div className="myDatasets-list">
                 <Stack direction="row" spacing={2} justifyContent="right" alignItems="flex-end" sx={{"margin":'10px'}}>
 
-                    <Button variant="contained" color="info">
+                    <Button variant="contained" color="info"
+                    onClick={
+                        () => {
+                            navigate("/login");
+                        }
+
+                    }
+                     >
                         Login
                     </Button>
-                    <Button variant="outlined" color="info">
+                    <Button variant="outlined" color="info"
+                    onClick={
+                        () => {
+                            navigate("/register");
+                        }
+                    }
+                    >
                         Register
                     </Button>
 

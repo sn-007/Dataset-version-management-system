@@ -22,7 +22,7 @@ function App() {
     <Router>
 
       <Routes>
-
+        <Route path="/" element={<Datasetsdisplayhome />} />
         <Route path="/mydatasets" element={<Mydatasets />} />
         <Route path="/approve" element={<Approverejects />} />
         <Route path="/newdataset" element={<Newdatasetform />} />

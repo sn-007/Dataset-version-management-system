@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import "./index.css";
 import {useNavigate} from "react-router-dom"
-
-
+import axios from 'axios';
 import Button from "@mui/material/Button";
+
 
 const defaultValues = {
     email: "",
@@ -15,6 +15,7 @@ const defaultValues = {
 
 //login form for publisher and admin
 const Loginform = () => {
+
     const [formValues, setFormValues] = useState(defaultValues);
     let navigate = useNavigate();
 
@@ -29,8 +30,60 @@ const Loginform = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formValues);
+
+        // http POST ":8000/users/login/" email="pub2@gmail.com" password="password"
+        axios.post('http://localhost:8000/users/login/', formValues)
+        .then(res => {
+
+            let user = res.data;
+            localStorage.setItem('user', JSON.stringify(user));
+
+            console.log("user",user);
+
+            if (user.group == "admin") {
+                navigate("/approve");
+            } else if (user.group == "publisher") {
+                navigate("/mydatasets");
+            } else {
+                navigate("/display");
+            }
+
+        }
+        )
+        .catch(err => {
+            console.log("err", err);
+            if (err.response.status === 400) {
+                alert("Invalid email or password");
+            }
+            else if (err.response.status === 500) {
+                alert("Internal server error");
+            }
+            else {
+                alert("Error:", err);
+            }
+        }
+        )
+
+
     };
     
+
+    useEffect(() => {
+        // if user already logged in, redirect to home page
+        if (localStorage.getItem('user')) {
+            let user = JSON.parse(localStorage.getItem('user'));
+            if (user.group == "admin") {
+                navigate("/approve");
+            }
+            else if (user.group == "publisher") {
+                navigate("/mydatasets");
+            }
+            else {
+                navigate("/display");
+            }
+        }
+    }, [navigate]);
+
     return (
         <div className='FormContainer' >
             <Box
