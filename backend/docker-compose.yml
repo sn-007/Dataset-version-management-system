@@ -17,6 +17,10 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/my_app_dir
+    environment:
+      AWS_ACCESS_KEY_ID: 'AKIAY5FSVPQ7XJIR3JNF'
+      AWS_SECRET_ACCESS_KEY: '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'
+      AWS_STORAGE_BUCKET_NAME: 'dfs-object-storage'
     ports:
       - "8000:8000"
     depends_on:

@@ -4,6 +4,8 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 
+from backend.storage_backends import PrivateMediaStorage, PublicMediaStorage
+
 # Create your models here.
 
 
@@ -41,8 +43,9 @@ class Temporary_dataset(models.Model):
     source = models.URLField(max_length=200, blank=True)
     # version : latest version number
     # TODO: change name to actual name
-    reference = models.FileField(
-        upload_to='datasets/{}/0'.format(name), blank=True)
+    # reference = models.FileField(
+    #     upload_to='datasets/{}/0'.format(name), blank=True)
+    reference = models.FileField(storage=PrivateMediaStorage(), blank=True)
     date = models.DateTimeField(auto_now_add=True)
     # publications = models.one
     PENDING = 'P'
@@ -85,8 +88,7 @@ class Version(models.Model):
     # comment
     comment = models.TextField()
     # reference: reference to object storing the dataset
-    reference = models.FileField(
-        upload_to='datasets/{0}/{1}'.format(dataset.name, version))
+    reference = models.FileField(storage=PublicMediaStorage())
     # update version number
     date = models.DateTimeField(auto_now_add=True)
 
