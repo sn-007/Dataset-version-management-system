@@ -29,4 +29,4 @@ class VersionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Version
-        fields = ('id', 'dataset', 'version', 'comment', 'date')
+        fields = ('id', 'dataset', 'version', 'comment', 'reference','date' )

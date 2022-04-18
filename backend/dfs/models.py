@@ -95,12 +95,5 @@ class Version(models.Model):
     class Meta:
         ordering = ['dataset', '-date']
 
-    def update_version(self):
-        # get version number from dataset version
-        self.dataset.version += 1
-        self.version = self.dataset.version
-        self.dataset.save()
-        self.save()
-
     def _str_(self):
         return str(self.version)+" "+self.comment

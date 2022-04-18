@@ -4,12 +4,12 @@ services:
   db:
     image: mysql
     ports:
-      - '3306:3306'
+      - "3306:3306"
     environment:
-       MYSQL_DATABASE: 'dfsdb'
-       MYSQL_USER: 'dfsuser'
-       MYSQL_PASSWORD: 'DFSpassword_123'
-       MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: "dfsdb"
+      MYSQL_USER: "dfsuser"
+      MYSQL_PASSWORD: "DFSpassword_123"
+      MYSQL_ROOT_PASSWORD: "password"
     volumes:
       - ./db:/var/lib/mysql
   web:
@@ -18,9 +18,9 @@ services:
     volumes:
       - .:/my_app_dir
     environment:
-      AWS_ACCESS_KEY_ID: 'AKIAY5FSVPQ7XJIR3JNF'
-      AWS_SECRET_ACCESS_KEY: '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'
-      AWS_STORAGE_BUCKET_NAME: 'dfs-object-storage'
+      AWS_ACCESS_KEY_ID: "AKIAY5FSVPQ7W4XZZNTI"
+      AWS_SECRET_ACCESS_KEY: "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"
+      AWS_STORAGE_BUCKET_NAME: "dfs-object-storage"
     ports:
       - "8000:8000"
     depends_on:

@@ -1,9 +1,14 @@
+from copy import copy
 from email.headerregistry import Group
+from pyexpat import model
+import re
 from django.http import Http404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from django.db import models
+from backend.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
 from user.permissions import IsAdminOrPublisherUser, IsAdminUser, IsPublisherUser
 
@@ -11,6 +16,8 @@ from .serializers import DatasetSerializer, Temporary_datasetSerializer, Publica
 from .models import Dataset, Temporary_dataset, Publication, Version
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from django.contrib.auth.models import Group
+from django.core.files.storage import default_storage
+from django.conf import settings
 
 
 class ReadOnly(BasePermission):
@@ -97,13 +104,13 @@ class DatasetDetail(APIView):
 
         dataset = self.get_object(datasetid, user)
 
-        publications = Publication.objects.filter(dataset=dataset)
+        # publications = Publication.objects.filter(dataset=dataset)
         versions = Version.objects.filter(dataset=dataset)
 
         dataset = DatasetSerializer(dataset).data
 
-        dataset["publications"] = PublicationSerializer(
-            publications, many=True).data
+        # dataset["publications"] = PublicationSerializer(
+        #     publications, many=True).data
         dataset["versions"] = VersionSerializer(versions, many=True).data
 
         return Response(dataset)
@@ -130,20 +137,21 @@ class TempdatasetList(APIView):
     ]
 
     def get(self, request, format=None):
-        status = request.query_params.get('status', None)
+        dataset_status = request.query_params.get('status', None)
 
         is_publisher = request.user.groups == Group.objects.get(
             name='Publisher')
 
         temporary_datasets = Temporary_dataset.objects.all()
 
-        if status:
-            if status not in ['pending', 'requested']:
+        if dataset_status:
+            if dataset_status not in ['P', 'R']:
+                # send 400
                 return Response(status=status.HTTP_400_BAD_REQUEST)
-            temporary_datasets = temporary_datasets.filter(status=status)
+            temporary_datasets = temporary_datasets.filter(status=dataset_status)
 
         if request.user.is_superuser:
-            temporary_datasets = temporary_datasets.filter(status='requested')
+            temporary_datasets = temporary_datasets.filter(status='R')
 
         if is_publisher:
             temporary_datasets = temporary_datasets.filter(
@@ -261,7 +269,22 @@ class VersionList(APIView):
         if dataset.publisher != request.user:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        version_serializer = VersionSerializer(data=request.data)
+        version_number = Version.objects.filter(dataset=dataset).count() + 1
+
+        storage = PublicMediaStorage()
+        file = request.FILES['reference']
+
+        
+
+        version = {
+            'dataset': dataset.id,
+            'version': version_number,
+            'comment': request.data.get('comment'),
+            'reference': file,
+        }
+
+
+        version_serializer = VersionSerializer(data= version)
         if version_serializer.is_valid():
             version_serializer.save()
             return Response(version_serializer.data, status=status.HTTP_201_CREATED)
@@ -294,28 +317,46 @@ def accept_tempdataset(request, datasetid):
         'publisher': temporary_dataset.publisher.id,
         'date': temporary_dataset.date
     }
-    # TODO: reference to file not copied
-    version = {
-        'comment': 'Initial version',
-        'reference': temporary_dataset.reference,
-        'date': temporary_dataset.date,
-        'version': 1
-    }
+
 
     dataset_serializer = DatasetSerializer(data=dataset)
 
     if dataset_serializer.is_valid():
-        dataset_serializer.save()
-        dataset = dataset_serializer.data
+        dataset = dataset_serializer.save()
+        serialized_dataset = dataset_serializer.data
         try:
-            version['dataset'] = dataset['id']
+            from storages.backends.s3boto3 import S3Boto3Storage
+            storage = PrivateMediaStorage()
+            # file = storage.open(settings.PRIVATE_MEDIA_LOCATION+'/'+  temporary_dataset.reference.name)
+            file = storage.open(temporary_dataset.reference.name)
+            
+            # storage = PublicMediaStorage()
+            # storage.save(settings.PUBLIC_MEDIA_LOCATION+'/'+temporary_dataset.reference.name, file)
+            # file.close()
+            # reference = storage.url(settings.PUBLIC_MEDIA_LOCATION+'/'+ temporary_dataset.reference.name)
+            # print("reference", reference)
+            version = {
+                'dataset': serialized_dataset['id'],
+                'version': 1,
+                'comment': 'Initial version',
+                'date': temporary_dataset.date,
+                'reference':  file,
+            }
+
             version_serializer = VersionSerializer(data=version)
             if version_serializer.is_valid():
                 version_serializer.save()
-                dataset['version'] = version_serializer.data
-                # temporary_dataset.delete()
-                return Response(dataset, status=status.HTTP_201_CREATED)
-        except:
+                version = version_serializer.data
+                serialized_dataset['versions'] = [version]
+                # delete temporary dataset
+                storage = PrivateMediaStorage()
+                temporary_dataset.delete()
+                return Response(serialized_dataset, status=status.HTTP_201_CREATED)
+            else:
+                dataset.delete()
+                return Response(version_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            print("error", e)
             dataset.delete()
             return Response(status=status.HTTP_400_BAD_REQUEST)
     return Response(dataset_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
