@@ -21,7 +21,7 @@ export default function MyDatasetslistitem({info}) {
                 <ListItemText
                     primary={info.name}
                     secondary={
-                        <React.Fragment sx={{fontSize: '10px' }}>
+                        <React.Fragment >
                             <Typography
                                 sx={{ display: 'inline', fontSize: '10px' }}
                                 component="span"

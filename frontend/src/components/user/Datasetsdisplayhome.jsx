@@ -49,7 +49,7 @@ export default function Datasetsdisplayhome() {
             } else if (user.group === "publisher") {
                 navigate("/mydatasets");
             } else {
-                navigate("/display");
+                navigate("/");
             }
         }
     }, [navigate]);

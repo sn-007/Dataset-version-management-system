@@ -69,10 +69,11 @@ def User_register(request):
 
             data["token"] = token
             data["groups"] = str(account.groups)
+            return Response(data, status=status.HTTP_201_CREATED)
         else:
             data = serializer.errors
-
-        return Response(data, status=status.HTTP_201_CREATED)
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        
     except IntegrityError as e:
         account = User.objects.get(username='')
         account.delete()

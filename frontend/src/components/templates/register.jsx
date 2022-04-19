@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 import "./index.css";
 
@@ -13,11 +14,13 @@ import "./index.css";
 //register form for publisher, we need name, username, email, password, confirm password
 
 const defaultValues = {
-    name: "",
+    first_name: "",
+    last_name: "",
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    groups:"2"
 
 };
 
@@ -33,8 +36,39 @@ const Registerform = () => {
     };
 
     const handleSubmit = (event) => {
+        //send the form values to the server
         event.preventDefault();
         console.log(formValues);
+        //check if the password and confirm password are the same
+        if (formValues.password !== formValues.confirmPassword) {
+            alert("Password and confirm password are not the same");
+            return;
+        }
+        //send the form values to the server
+        // http POST ":8000/users/register/"
+        axios.post("http://localhost:8000/users/register/", formValues)
+            .then(res => {
+                let user = res.data;
+                localStorage.setItem("user", JSON.stringify(user));
+                console.log("user", user);
+                navigate("/mydatasets");
+            }
+            )
+            .catch(err => {
+                console.log("err", err);
+                if (err.response.status === 400) {
+                    //display error message
+                    alert(err.response.data.message);
+                    
+                }
+                else if (err.response.status === 500) {
+                    alert("Internal server error");
+                }
+            }
+            );
+
+
+
     };
 
     return (
@@ -56,16 +90,33 @@ const Registerform = () => {
             <form onSubmit={handleSubmit} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Grid container alignItems="center" justify="center" display='flex' direction='column'>
 
-                    <TextField
-                        id="name-input"
-                        name="name"
-                        label="Name"
-                        type="text"
-                        variant='filled'
-                        value={formValues.name}
-                        onChange={handleInputChange}
-                        sx={{ width: '40%', margin: '10px' }}
-                    />
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+
+                        <TextField
+                            id="first_name-input"
+                            name="first_name"
+                            label="First Name"
+                            type="text"
+                            variant='filled'
+                            value={formValues.first_name}
+                            onChange={handleInputChange}
+                            sx={{ width: '50%', margin: '10px' }}
+                            size="small"
+                        />
+
+                        <TextField
+                            id="last_name-input"
+                            name="last_name"
+                            label="Last Name"
+                            type="text"
+                            variant='filled'
+                            value={formValues.last_name}
+                            onChange={handleInputChange}
+                            sx={{ width: '50%', margin: '10px' }}
+                            size="small"
+                        />
+
+                    </div>
 
                     <TextField
                         id="username-input"
@@ -76,6 +127,7 @@ const Registerform = () => {
                         value={formValues.username}
                         onChange={handleInputChange}
                         sx={{ width: '40%', margin: '10px' }}
+                        size="small"
                     />
 
                     <TextField
@@ -87,6 +139,7 @@ const Registerform = () => {
                         value={formValues.email}
                         onChange={handleInputChange}
                         sx={{ width: '40%', margin: '10px' }}
+                        size="small"
                     />
 
                     <TextField
@@ -98,6 +151,7 @@ const Registerform = () => {
                         value={formValues.password}
                         onChange={handleInputChange}
                         sx={{ width: '40%', margin: '10px' }}
+                        size="small"
                     />
 
                     <TextField
@@ -109,18 +163,21 @@ const Registerform = () => {
                         value={formValues.confirmPassword}
                         onChange={handleInputChange}
                         sx={{ width: '40%', margin: '10px' }}
+                        size="small"
                     />
 
                     <div style={{ flexDirection: 'row', display: 'flex', marginTop: '5vh' }} >
 
-                        <Button variant="contained" color="primary" type="submit" sx={{ marginRight: '20px', width: '7vw' }}
-                        onClick = { ()=>{navigate("/login",{}); } }
+                        <Button variant="contained" color="primary" type="submit" sx={{ marginRight: '20px', width: '8vw' }}
+
                         >
-                            Login
+                            Register
                         </Button>
 
-                        <Button variant="contained" color="primary" type="submit" sx={{ marginLeft: '20px', width: '8vw' }}>
-                            Register
+                        <Button variant="contained" color="primary" sx={{ marginLeft: '20px', width: '7vw' }}
+                            onClick={() => { navigate("/login", {}); }}
+                        >
+                            Login
                         </Button>
 
 
