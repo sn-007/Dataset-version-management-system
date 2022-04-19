@@ -64,3 +64,11 @@
 * Standard analytics on datasets (Python)
 * End-user search queries on datasets (NoSQL)
 * Private dataset access work flow (Python)
+
+```sh
+cd backend
+sudo chown -R $USER:$USER db
+docker-compose build # build containers
+docker-compose up -d # start containers -d for daemon
+docker-compose down # stop containers
+```
