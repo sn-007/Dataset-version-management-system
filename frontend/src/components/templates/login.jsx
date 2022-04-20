@@ -45,7 +45,7 @@ const Loginform = () => {
             } else if (user.group == "publisher") {
                 navigate("/mydatasets");
             } else {
-                navigate("/display");
+                navigate("/");
             }
 
         }
@@ -79,7 +79,7 @@ const Loginform = () => {
                 navigate("/mydatasets");
             }
             else {
-                navigate("/display");
+                navigate("/login");
             }
         }
     }, [navigate]);

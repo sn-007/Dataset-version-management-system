@@ -15,14 +15,16 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import FeedIcon from '@mui/icons-material/Feed';
 import SearchBar from './search'
+import { Link } from 'react-router-dom';
 
 export default function Datasetslist({info}) {
+    const pathname = window.location.pathname;
   return (
     <div>
 
 <List alignItems="center" sx={{ '&:hover': { backgroundColor: '#eeeeee', justifyContent: 'center' } }}>
       <Card> 
-       <CardActionArea href="https://google.com">
+       <CardActionArea component ={Link} to={`/${info.id}`}>
       <ListItem>
       <ListItemAvatar>
           <Avatar>

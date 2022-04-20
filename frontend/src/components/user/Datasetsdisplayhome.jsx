@@ -26,17 +26,20 @@ export default function Datasetsdisplayhome() {
         {
             'name': 'Dataset 1',
             'description': 'This is the first dataset',
-            'date': '01/01/2020'
+            'date': '01/01/2020',
+            id: 0,
         },
         {
             'name': 'Dataset 2',
             'description': 'This is the second dataset',
-            'date': '01/01/2020'
+            'date': '01/01/2020',
+            id: 1,
         },
         {
             'name': 'Dataset 3',
             'description': 'This is the third dataset',
-            'date': '01/01/2020'
+            'date': '01/01/2020',
+            id: 2,
         }
     ]
 
