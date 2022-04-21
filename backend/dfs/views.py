@@ -18,6 +18,7 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 from django.contrib.auth.models import Group
 from django.core.files.storage import default_storage
 from django.conf import settings
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class ReadOnly(BasePermission):
@@ -136,6 +137,8 @@ class TempdatasetList(APIView):
         IsAdminOrPublisherUser
     ]
 
+    parser_classes = (MultiPartParser, FormParser)
+
     def get(self, request, format=None):
         dataset_status = request.query_params.get('status', None)
 
@@ -239,6 +242,8 @@ class VersionList(APIView):
     permission_classes = [
         IsPublisherUser | ReadOnly
     ]
+
+    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, format=None):
 
