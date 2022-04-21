@@ -5,6 +5,7 @@ import { Box } from "@mui/system";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import backendConstants from "./backendConstants";
 
 import "./index.css";
 
@@ -38,7 +39,7 @@ const Registerform = () => {
     const handleSubmit = (event) => {
         //send the form values to the server
         event.preventDefault();
-        console.log(formValues);
+        //console.log(formValues);
         //check if the password and confirm password are the same
         if (formValues.password !== formValues.confirmPassword) {
             alert("Password and confirm password are not the same");
@@ -46,6 +47,8 @@ const Registerform = () => {
         }
         //send the form values to the server
         // http POST ":8000/users/register/"
+        let url = backendConstants.url + "users/register/";
+        console.log(url)
         axios.post("http://10.1.38.115:8000/users/register/", formValues)
             .then(res => {
                 let user = res.data;

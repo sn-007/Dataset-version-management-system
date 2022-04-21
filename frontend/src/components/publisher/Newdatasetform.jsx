@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 import axios from "axios";
 import { Box } from "@mui/system";
+import backendConstants from "../templates/backendConstants";
 
 
 import Button from "@mui/material/Button";
@@ -13,7 +14,7 @@ const defaultValues = {
     source: "",
     status: "P",
     reference: null,
-    publisher: JSON.parse(localStorage.getItem('user')).id,
+    //publisher: JSON.parse(localStorage.getItem('user')).id,
 
 
 };
@@ -66,6 +67,7 @@ const Newdatasetform = () => {
         formData.append('status', formValues.status);
         formData.append('reference', formValues.reference, formValues.reference.name);
 
+        let url = backendConstants.url + "tempdatasets/";
         axios.post('http://10.1.38.115:8000/api/tempdatasets/', formData, {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
