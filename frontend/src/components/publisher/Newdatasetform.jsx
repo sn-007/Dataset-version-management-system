@@ -25,12 +25,12 @@ const Newdatasetform = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name != 'reference') {
+        const boolvalue = (name==="reference");
+        if (!boolvalue) {
             setFormValues({
                 ...formValues,
                 [name]: value,
             });
-
         }
 
     };
@@ -58,52 +58,41 @@ const Newdatasetform = () => {
 
 
 
-        //post these dataset to the url localhost:8000/api/tempdatasets/
-        let formData = new FormData();
+        //post these dataset to the url 10.1.38.115:8000/api/tempdatasets/
+        var formData = new FormData(); 
         formData.append('name', formValues.name);
         formData.append('description', formValues.description);
         formData.append('source', formValues.source);
         formData.append('status', formValues.status);
-        formData.append('reference', formValues.reference);
-        formData.append('publisher', formValues.publisher);
-        //console.log(formData);
-        console.log(formValues);
+        formData.append('reference', formValues.reference, formValues.reference.name);
 
-
-
-        axios.post('http://localhost:8000/api/tempdatasets/', {formData}, {
+        axios.post('http://10.1.38.115:8000/api/tempdatasets/', formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
-                //'Cross-Origin-Resource-Policy': 'same-origin',
             }
+        },
+          {
 
-        })
+          }  
+        )
             .then(res => {
                 console.log("res", res);
                 alert("Dataset created successfully");
                 setFormValues(defaultValues);
             }
             )
-            .catch(err => {
-                console.log("err", err);
-                if (err.response.status === 400) {
-                    alert("Invalid email or password");
+            .catch((err) => {
+                console.log("err request", err.request);
+                console.log("err response", err.response);
+                if (err.response.data.reference){
+                    alert(err.response.data.reference[0]) 
                 }
-                else if (err.response.status === 500) {
-                    alert("Internal server error");
-                }
-                else {
-                    alert(err);
+                else
+                {
+                    alert(err.response.data.detail);
                 }
             }
-            )
-
-
-
-
-
-
+            );
     };
 
 

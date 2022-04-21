@@ -46,7 +46,7 @@ const Registerform = () => {
         }
         //send the form values to the server
         // http POST ":8000/users/register/"
-        axios.post("http://localhost:8000/users/register/", formValues)
+        axios.post("http://10.1.38.115:8000/users/register/", formValues)
             .then(res => {
                 let user = res.data;
                 localStorage.setItem("user", JSON.stringify(user));

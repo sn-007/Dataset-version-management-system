@@ -32,7 +32,7 @@ const Loginform = () => {
         console.log(formValues);
 
         // http POST ":8000/users/login/" email="pub2@gmail.com" password="password"
-        axios.post('http://localhost:8000/users/login/', formValues)
+        axios.post('http://10.1.38.115:8000/users/login/', formValues)
         .then(res => {
 
             let user = res.data;
