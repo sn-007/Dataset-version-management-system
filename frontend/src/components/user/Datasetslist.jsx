@@ -22,7 +22,7 @@ export default function Datasetslist({info}) {
   return (
     <div>
 
-<List alignItems="center" sx={{ '&:hover': { backgroundColor: '#eeeeee', justifyContent: 'center' } }}>
+<List  sx={{ '&:hover': { backgroundColor: '#eeeeee', justifyContent: 'center',alignItems:"center" } }}>
       <Card> 
        <CardActionArea component ={Link} to={`/${info.id}`}>
       <ListItem>
@@ -36,7 +36,7 @@ export default function Datasetslist({info}) {
              <ListItemText
                     primary={info.name}
                     secondary={
-                        <React.Fragment sx={{fontSize: '10px' }}>
+                        <React.Fragment >
                             <Typography
                                 sx={{ display: 'inline', fontSize: '10px' }}
                                 component="span"

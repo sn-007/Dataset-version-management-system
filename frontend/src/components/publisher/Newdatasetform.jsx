@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 import axios from "axios";
+import { Box } from "@mui/system";
 
 
 import Button from "@mui/material/Button";
@@ -10,15 +11,17 @@ const defaultValues = {
     name: "",
     description: "",
     source: "",
-    status:"P",
-    //if user exists in localstorage set that to publisher else set empty
-    //publisher:JSON.parse(localStorage.getItem('user')).id ? JSON.parse(localStorage.getItem('user')).id : "",
+    status: "P",
     reference: null,
+    publisher: JSON.parse(localStorage.getItem('user')).id,
 
 
 };
 const Newdatasetform = () => {
     const [formValues, setFormValues] = useState(defaultValues);
+    
+    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -49,7 +52,11 @@ const Newdatasetform = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        //console.log(formValues);
+
+
+
+
+
 
         //post these dataset to the url localhost:8000/api/tempdatasets/
         let formData = new FormData();
@@ -57,9 +64,21 @@ const Newdatasetform = () => {
         formData.append('description', formValues.description);
         formData.append('source', formValues.source);
         formData.append('status', formValues.status);
-        formData.append('publisher', formValues.publisher);
         formData.append('reference', formValues.reference);
-        axios.post('http://localhost:8000/api/tempdatasets/', formData)
+        formData.append('publisher', formValues.publisher);
+        //console.log(formData);
+        console.log(formValues);
+
+
+
+        axios.post('http://localhost:8000/api/tempdatasets/', {formData}, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
+                //'Cross-Origin-Resource-Policy': 'same-origin',
+            }
+
+        })
             .then(res => {
                 console.log("res", res);
                 alert("Dataset created successfully");
@@ -75,10 +94,14 @@ const Newdatasetform = () => {
                     alert("Internal server error");
                 }
                 else {
-                    alert("Error:", err);
+                    alert(err);
                 }
             }
             )
+
+
+
+
 
 
     };
@@ -88,6 +111,19 @@ const Newdatasetform = () => {
 
     return (
         <div className='FormContainer'>
+              <Box
+                component="img"
+                sx={{
+                    height: 200,
+                    width: 200,
+                    maxHeight: { xs: 233, md: 167 },
+                    maxWidth: { xs: 350, md: 250 },
+                    alignSelf: "center",
+                    
+                }}
+                src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
+            />
+
 
             <div className="myDatasets-heading">
                 <h2>NEW DATASET UPLOAD</h2>
