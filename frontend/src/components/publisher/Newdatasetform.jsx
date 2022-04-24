@@ -7,18 +7,22 @@ import { Box } from "@mui/system";
 import backendConstants from "../templates/backendConstants";
 
 
+
 import Button from "@mui/material/Button";
+import { useAlert } from "react-alert";
+
 const defaultValues = {
     name: "",
     description: "",
     source: "",
-    status: "P",
+    status: "R",
     reference: null,
     //publisher: JSON.parse(localStorage.getItem('user')).id,
 
 
 };
 const Newdatasetform = () => {
+    const alert = useAlert();
     const [formValues, setFormValues] = useState(defaultValues);
     
     
@@ -66,6 +70,7 @@ const Newdatasetform = () => {
         formData.append('source', formValues.source);
         formData.append('status', formValues.status);
         formData.append('reference', formValues.reference, formValues.reference.name);
+        //console.log(formValues);
 
         let url = backendConstants.url + "tempdatasets/";
         axios.post('http://10.1.38.115:8000/api/tempdatasets/', formData, {
@@ -79,7 +84,7 @@ const Newdatasetform = () => {
         )
             .then(res => {
                 console.log("res", res);
-                alert("Dataset created successfully");
+                alert.show("Dataset created successfully",{type:'success'});
                 setFormValues(defaultValues);
             }
             )
@@ -87,11 +92,11 @@ const Newdatasetform = () => {
                 console.log("err request", err.request);
                 console.log("err response", err.response);
                 if (err.response.data.reference){
-                    alert(err.response.data.reference[0]) 
+                    alert.show(err.response.data.reference[0],{type:'error'}) 
                 }
                 else
                 {
-                    alert(err.response.data.detail);
+                    alert.show(err.response.data.detail,{type:'error'});
                 }
             }
             );

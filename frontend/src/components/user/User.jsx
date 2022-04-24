@@ -1,6 +1,8 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import Eachdatasetinfo from './Eachdatasetinfo';
+import axios from 'axios';
+import useEffect from 'react';
 
 import {
     useParams,
@@ -36,19 +38,30 @@ import {
  ];
 
 const User = ({match}) => {
+    const [datasets, setDatasets] = React.useState([]);
+    useEffect(() => {
+        axios.get("http://10.1.38.115:8000/api/datasets/", {
+            headers: {}
+        })
+            .then(res => {
+                console.log("res", res);
+                setDatasets(res.data);
+            })
+            .catch(err => {
+                console.log("err", err);
+            });
+    }, []);
+
     const params = useParams();
     const category = categories.find(category => {
         return parseInt(params.id) === category.id;
       });
    return (
-   <>
-    {/* <div>{category.name}</div> */}
+   
+    
     <Eachdatasetinfo info={category} />
-    {/*
-   <Link to={`${match.url}/1`}>
-       {categories.find(cat=>cat.id === 1).name}
-   </Link> */}
-   </>
+    
+
    );
 };
 export default User;
