@@ -5,6 +5,8 @@ import { Box } from "@mui/system";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import backendConstants from "./backendConstants";
+import { useAlert } from 'react-alert'
 
 import "./index.css";
 
@@ -25,6 +27,7 @@ const defaultValues = {
 };
 
 const Registerform = () => {
+    const alert = useAlert();
     const [formValues, setFormValues] = useState(defaultValues);
     const navigate = useNavigate();
     const handleInputChange = (e) => {
@@ -38,14 +41,16 @@ const Registerform = () => {
     const handleSubmit = (event) => {
         //send the form values to the server
         event.preventDefault();
-        console.log(formValues);
+        //console.log(formValues);
         //check if the password and confirm password are the same
         if (formValues.password !== formValues.confirmPassword) {
-            alert("Password and confirm password are not the same");
+            alert.show("password-mismatch",{type:'error'});
             return;
         }
         //send the form values to the server
         // http POST ":8000/users/register/"
+        let url = backendConstants.url + "users/register/";
+        console.log(url)
         axios.post("http://10.1.38.115:8000/users/register/", formValues)
             .then(res => {
                 let user = res.data;
@@ -58,11 +63,12 @@ const Registerform = () => {
                 console.log("err", err);
                 if (err.response.status === 400) {
                     //display error message
-                    alert(err.response.data.message);
+                    
+                    alert.show(err.response.data.message,{type:'error'});
                     
                 }
                 else if (err.response.status === 500) {
-                    alert("Internal server error");
+                    alert.show("Internal server error");
                 }
             }
             );

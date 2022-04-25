@@ -6,6 +6,8 @@ import "./index.css";
 import {useNavigate} from "react-router-dom"
 import axios from 'axios';
 import Button from "@mui/material/Button";
+import backendConstants from "./backendConstants";
+import { useAlert } from 'react-alert'
 
 
 const defaultValues = {
@@ -15,6 +17,8 @@ const defaultValues = {
 
 //login form for publisher and admin
 const Loginform = () => {
+
+    const alert = useAlert();
 
     const [formValues, setFormValues] = useState(defaultValues);
     let navigate = useNavigate();
@@ -32,6 +36,7 @@ const Loginform = () => {
         console.log(formValues);
 
         // http POST ":8000/users/login/" email="pub2@gmail.com" password="password"
+        let url = backendConstants.url + "users/login/";
         axios.post('http://10.1.38.115:8000/users/login/', formValues)
         .then(res => {
 
@@ -53,13 +58,17 @@ const Loginform = () => {
         .catch(err => {
             console.log("err", err);
             if (err.response.status === 400) {
-                alert("Invalid email or password");
+                
+                alert.show("Invalid Credentials",{type:'error'});
             }
             else if (err.response.status === 500) {
-                alert("Internal server error");
+                
+                alert.show("Internal server error",{type:'error'});
+
             }
             else {
-                alert("Error:", err);
+                alert.show({err},{type:'error'});
+                
             }
         }
         )

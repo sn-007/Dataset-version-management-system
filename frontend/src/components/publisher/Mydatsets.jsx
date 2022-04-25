@@ -2,30 +2,61 @@ import React from 'react';
 import './index.css';
 import MyDatasetslistitem from './Mydatasetslistitem';
 import List from '@mui/material/List';
-
+import { useNavigate } from "react-router-dom"
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 
 // render the list of datasets using myDatasetslistitem component 
 
+
+
 export default function Mydatasets() {
 
-    const datasets = [
-        {
-            'name': 'Dataset 1',
-            'description': 'This is the first dataset',
-            'date': '01/01/2020'
-        },
-        {
-            'name': 'Dataset 2',
-            'description': 'This is the second dataset',
-            'date': '01/01/2020'
-        },
-        {
-            'name': 'Dataset 3',
-            'description': 'This is the third dataset',
-            'date': '01/01/2020'
+    
+    let navigate = useNavigate();
+    let [datasets, setDatasets] = useState([]);
+
+    useEffect(() => {
+        if (localStorage.getItem('user')) {
+            let user = JSON.parse(localStorage.getItem('user'));
+            console.log("user", user);
+            if (user.group === "admin") {
+                navigate("/approve");
+            } else if (user.group === "publisher") {
+                navigate("/mydatasets");
+            } else {
+                navigate("/login");
+            }
         }
-    ]
+    }, [navigate]);
+
+    useEffect(() => {
+        
+
+        if (localStorage.getItem('user') !== null) {
+        axios.get("http://10.1.38.115:8000/api/datasets/", {
+            headers: {
+                'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
+                
+                
+            }
+        })
+            .then(res => {
+                console.log("res", res);
+                setDatasets(res.data);
+            })
+            .catch(err => {
+                console.log("err", err);
+            });
+
+        }
+        else
+        {
+            navigate("/login");
+        }
+    }, []); 
+    
 
 
 
