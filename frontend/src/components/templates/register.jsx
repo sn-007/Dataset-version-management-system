@@ -61,17 +61,24 @@ const Registerform = () => {
             )
             .catch(err => {
                 console.log("err", err);
-                if (err.response.status === 400) {
-                    //display error message
-                    
-                    alert.show(err.response.data.message,{type:'error'});
-                    
+
+                console.log("err request", err.request);
+                console.log("err response", err.response);
+                if (err.response.data){
+                    //extract every entry from the response.data object and display the error
+                    for (let key in err.response.data){
+                        alert.show(err.response.data[key],{type:'error'});
+                    }
                 }
-                else if (err.response.status === 500) {
-                    alert.show("Internal server error");
+                else{
+                    alert.show(err.response.message,{type:'error'});
                 }
             }
+                    
+                
+                
             );
+        
 
 
 

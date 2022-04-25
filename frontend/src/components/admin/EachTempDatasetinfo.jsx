@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Datasetversions from './Datasetversions';
+import Datasetversions from '../user/Datasetversions';
 import Avatar from '@mui/material/Avatar';
 import { green, pink, blue } from '@mui/material/colors';
 import "./index.css";
@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { useNavigate } from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import Navbar from '../templates/Navbar';
 
 const convertDate = (date) => {
@@ -26,7 +26,7 @@ const convertDate = (date) => {
 }
 
 
-export default function Eachdatasetdatasetinfo() {
+export default function Eachtempdatasetinfo() {
 
     const params = useParams();
     const navigate = useNavigate();
@@ -45,11 +45,13 @@ export default function Eachdatasetdatasetinfo() {
         'source': "",
     };
     const [dataset, setDataset] = useState(defaultDataset);
-    const [publisher, setPublisher] = React.useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        axios.get("http://10.1.38.115:8000/api/datasets/" + params.id, {
-            headers: {}
+        axios.get("http://10.1.38.115:8000/api/tempdatasets/" + params.id, {
+            headers: {
+                'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
+            }
         })
 
             .then(res => {
@@ -63,36 +65,23 @@ export default function Eachdatasetdatasetinfo() {
     }, []);
 
     //check if user is logged in or not from localstorage
-    React.useEffect(() => {
+    useEffect(() => {
         if (localStorage.getItem("user") != null) {
-            let user = JSON.parse(localStorage.getItem('user'));
-            if (user.group == "publisher") {
-                setPublisher(true);
-
-            }
+            setLoggedIn(true);
         }
-
-
     }, []);
 
 
-
-    let username = "xx";
-    let fullname = "";
-
-    if (localStorage.getItem("user") != null) {
-        username = JSON.parse(localStorage.getItem('user')).username;
-        fullname = JSON.parse(localStorage.getItem('user')).first_name + " " + JSON.parse(localStorage.getItem('user')).last_name;
-    }
+    
 
 
     return (
 
 
 
-        <div className="myDatasets" >
-            <Navbar />
-            <div className="myDatasets-heading" style={{ marginTop: '15vh' }}>
+        <div className="myDatasets" style={{paddingLeft:'1vw'}}>
+            <Navbar/>
+            <div className="myDatasets-heading" style={{marginTop:'10vh'}}>
 
                 <h1>{dataset.name}</h1>
 
@@ -109,11 +98,11 @@ export default function Eachdatasetdatasetinfo() {
                         </Avatar>
 
                         <Box pt={1} sx={{ height: '20vh', width: '100vh' }} >
-                            <Typography variant='h5' style={{ color: "black", marginTop: '2vh' }} >
-                                {dataset.username.toUpperCase()}
+                            <Typography variant='h5' style={{ color: "black", marginTop:'2vh' }} >
+                            {dataset.username.toUpperCase()}
                             </Typography>
                             <Typography variant='body1' >
-
+                                
                             </Typography>
                         </Box>
                     </Stack>
@@ -142,53 +131,10 @@ export default function Eachdatasetdatasetinfo() {
 
 
 
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        {/* <Typography pt={4} variant="h4">
-                            versions
-                        </Typography> */}
-
-                        <h2 style={{ paddingTop: '6vh' }}>Versions</h2>
-
-                        {publisher &&
-                        <AddCircleOutlineIcon sx={{ color: 'black', fontSize: '5vh', marginLeft: '2vh', marginTop: 5 }} onClick={() => {navigate("/newversion/" + params.id)}} />
-
-                        }
-                        
-
-
-
-
-                        
-
-
-
-                        {/* <AddCircleOutlineIcon sx={{ paddingTop: '5vh', marginLeft: 2, marginTop: 1.3 }} onClick={() => {
-                            navigate('/newversion/' + params.id);
-                        }} /> */}
-
-
-
-                    </div>
-
+    
 
                 </Box>
 
-
-
-
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                    {
-                        dataset.versions.map(
-                            (version, index) => {
-                                console.log(version);
-                                return (
-                                    //<h1 key={index}>{version.reference}</h1>
-                                    < Datasetversions info={version} key={index} />
-                                )
-                            }
-                        )
-                    }
-                </List>
 
             </div>
         </div>

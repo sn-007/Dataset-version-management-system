@@ -16,10 +16,16 @@ import Datasetsdisplayhome from './components/user/Datasetsdisplayhome'
 import Eachdatasetinfo from './components/user/Eachdatasetinfo'
 import Loginform from './components/templates/login';
 import Registerform from './components/templates/register';
+import Versionupdate from './components/publisher/Versionupdate';
+import Eachtempdatasetinfo from './components/admin/EachTempDatasetinfo';
+
+
+
 
 
 function App() {
   return (
+    
     <Router>
 
       <Routes>
@@ -31,10 +37,15 @@ function App() {
         <Route path="/login" element={<Loginform />} />
         <Route path="/register" element={<Registerform />} />
         <Route path="/:id" element={<Eachdatasetinfo />} />
+        <Route path="/newversion/:id" element={<Versionupdate />} />
+        <Route path="/admincheck/:id" element={<Eachtempdatasetinfo />} />
 
       </Routes>
 
     </Router>
+    
+
+    
 
 
 

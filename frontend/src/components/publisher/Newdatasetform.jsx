@@ -5,6 +5,11 @@ import { Typography } from "@mui/material";
 import axios from "axios";
 import { Box } from "@mui/system";
 import backendConstants from "../templates/backendConstants";
+import { useNavigate } from "react-router";
+import { Audio } from 'react-loader-spinner';
+import { TailSpin } from "react-loader-spinner";
+import Navbar from '../templates/Navbar';
+import './index.css';
 
 
 
@@ -22,15 +27,39 @@ const defaultValues = {
 
 };
 const Newdatasetform = () => {
+    let navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (localStorage.getItem('user')) {
+            let user = JSON.parse(localStorage.getItem('user'));
+            if (user.group == "publisher") {
+                //do nothing
+            }
+            else if (user.group == "admin") {
+                navigate("/approve");
+            }
+            else {
+                navigate("/login");
+            }
+        }
+        else {
+            navigate("/login");
+        }
+    }, [navigate]);
+
+
+
+
     const alert = useAlert();
     const [formValues, setFormValues] = useState(defaultValues);
-    
-    
+    const [load, setLoad] = useState(false);
+
+
 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        const boolvalue = (name==="reference");
+        const boolvalue = (name === "reference");
         if (!boolvalue) {
             setFormValues({
                 ...formValues,
@@ -64,7 +93,7 @@ const Newdatasetform = () => {
 
 
         //post these dataset to the url 10.1.38.115:8000/api/tempdatasets/
-        var formData = new FormData(); 
+        var formData = new FormData();
         formData.append('name', formValues.name);
         formData.append('description', formValues.description);
         formData.append('source', formValues.source);
@@ -73,30 +102,32 @@ const Newdatasetform = () => {
         //console.log(formValues);
 
         let url = backendConstants.url + "tempdatasets/";
+        setLoad(true);
         axios.post('http://10.1.38.115:8000/api/tempdatasets/', formData, {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
             }
         },
-          {
+            {
 
-          }  
+            }
         )
             .then(res => {
+                setLoad(false);
                 console.log("res", res);
-                alert.show("Dataset created successfully",{type:'success'});
+                alert.show("Dataset created successfully", { type: 'success' });
                 setFormValues(defaultValues);
             }
             )
             .catch((err) => {
+                setLoad(false);
                 console.log("err request", err.request);
                 console.log("err response", err.response);
-                if (err.response.data.reference){
-                    alert.show(err.response.data.reference[0],{type:'error'}) 
+                if (err.response.data.reference) {
+                    alert.show(err.response.data.reference[0], { type: 'error' })
                 }
-                else
-                {
-                    alert.show(err.response.data.detail,{type:'error'});
+                else {
+                    alert.show(err.response.data.detail, { type: 'error' });
                 }
             }
             );
@@ -106,8 +137,14 @@ const Newdatasetform = () => {
 
 
     return (
-        <div className='FormContainer'>
-              <Box
+        <div className='myDatasets'>
+
+            <Navbar />            
+            
+                
+
+
+            <Box
                 component="img"
                 sx={{
                     height: 200,
@@ -115,13 +152,20 @@ const Newdatasetform = () => {
                     maxHeight: { xs: 233, md: 167 },
                     maxWidth: { xs: 350, md: 250 },
                     alignSelf: "center",
-                    
+                    marginTop: "7vh",
+
                 }}
                 src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
             />
 
+            
+
 
             <div className="myDatasets-heading">
+                
+
+            
+            
                 <h2>NEW DATASET UPLOAD</h2>
             </div>
             <form onSubmit={handleSubmit} sx={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -189,6 +233,30 @@ const Newdatasetform = () => {
                     <Button variant="contained" color="primary" type="submit">
                         Submit
                     </Button>
+
+                    {
+                        load &&
+
+                        <div
+                            style={{
+                                width: "100%",
+                                height: "100",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                position: "absolute",
+                                top: "5%",
+                            }}
+                        >
+                            <TailSpin color="#00BFFF" height={160} width={160} color ='blue' ariaLabel='loading' />
+                            
+                        </div>
+
+                    }
+
+
+
+
 
                 </Grid>
             </form>

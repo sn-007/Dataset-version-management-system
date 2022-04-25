@@ -5,6 +5,7 @@ import List from '@mui/material/List';
 import { useNavigate } from "react-router-dom"
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import Navbar from '../templates/Navbar';
 
 
 // render the list of datasets using myDatasetslistitem component 
@@ -62,8 +63,9 @@ export default function Mydatasets() {
 
     return (
         <div className="myDatasets">
+            <Navbar />
             
-            <div className="myDatasets-heading">
+            <div className="myDatasets-heading" style={{marginTop:'20vh'}}>
                 <h2>MY DATASETS</h2>
             </div>
             <div className="myDatasets-list">

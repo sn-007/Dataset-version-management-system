@@ -10,6 +10,7 @@ import axios from 'axios';
 // import SearchBar from 'material-ui-search-bar';
 
 import SearchBar from './search'
+import Navbar from '../templates/Navbar';
 
 
 
@@ -47,9 +48,11 @@ export default function Datasetsdisplayhome() {
 
 
     return (
-        <div className="myDatasets">
 
-            <div className="myDatasets-heading">
+        <div className="myDatasets" >
+            <Navbar />
+
+            <div className="myDatasets-heading" style={{marginTop:'10vh'}}>
                 <h2 >DATA FOUNDATION</h2>
             </div>
 
