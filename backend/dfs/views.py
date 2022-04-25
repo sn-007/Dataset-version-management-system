@@ -19,6 +19,7 @@ from django.contrib.auth.models import Group
 from django.core.files.storage import default_storage
 from django.conf import settings
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.conf import settings
 
 
 class ReadOnly(BasePermission):
@@ -90,7 +91,6 @@ class DatasetDetail(APIView):
             if user is not None:
                 is_publisher = user.groups == Group.objects.get(
                     name='Publisher')
-
                 if is_publisher:
                     if dataset.publisher != user:
                         raise Http404
@@ -110,6 +110,8 @@ class DatasetDetail(APIView):
 
         dataset = DatasetSerializer(dataset).data
 
+        #publisher = settings.AUTH_USER_MODEL.objects.get(id=dataset.publisher)
+        #print("publisher::::::::::::::::", publisher)
         # dataset["publications"] = PublicationSerializer(
         #     publications, many=True).data
         dataset["versions"] = VersionSerializer(versions, many=True).data
@@ -269,6 +271,7 @@ class VersionList(APIView):
 
     def post(self, request, format=None):
 
+        
         dataset = Dataset.objects.get(id=request.data.get('dataset'))
 
         if dataset.publisher != request.user:
