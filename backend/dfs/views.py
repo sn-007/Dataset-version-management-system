@@ -20,6 +20,9 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.conf import settings
+from user.serializer import UserSerializer
+from user.models import User
+
 
 
 class ReadOnly(BasePermission):
@@ -110,10 +113,10 @@ class DatasetDetail(APIView):
 
         dataset = DatasetSerializer(dataset).data
 
-        #publisher = settings.AUTH_USER_MODEL.objects.get(id=dataset.publisher)
-        #print("publisher::::::::::::::::", publisher)
-        # dataset["publications"] = PublicationSerializer(
-        #     publications, many=True).data
+        publisher = User.objects.get(id=dataset['publisher']) 
+
+
+        dataset['publisher'] = UserSerializer(publisher).data
         dataset["versions"] = VersionSerializer(versions, many=True).data
 
         return Response(dataset)
@@ -217,6 +220,10 @@ class TempdatasetDetail(APIView):
 
         print("dataset\n", dataset)
         dataset = Temporary_datasetSerializer(dataset).data
+
+        publisher = User.objects.get(id=dataset['publisher']) 
+        dataset['publisher'] = UserSerializer(publisher).data
+
         return Response(dataset)
 
     def put(self, request, datasetid, format=None):
