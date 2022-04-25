@@ -19,6 +19,10 @@ from django.contrib.auth.models import Group
 from django.core.files.storage import default_storage
 from django.conf import settings
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.conf import settings
+from user.serializer import UserSerializer
+from user.models import User
+
 
 
 class ReadOnly(BasePermission):
@@ -90,7 +94,6 @@ class DatasetDetail(APIView):
             if user is not None:
                 is_publisher = user.groups == Group.objects.get(
                     name='Publisher')
-
                 if is_publisher:
                     if dataset.publisher != user:
                         raise Http404
@@ -110,8 +113,14 @@ class DatasetDetail(APIView):
 
         dataset = DatasetSerializer(dataset).data
 
-        # dataset["publications"] = PublicationSerializer(
-        #     publications, many=True).data
+        publisher = User.objects.get(id=dataset['publisher']) 
+
+
+        dataset['email'] = publisher.email
+        dataset['first_name'] = publisher.first_name
+        dataset['last_name'] = publisher.last_name
+        dataset['username'] = publisher.username
+
         dataset["versions"] = VersionSerializer(versions, many=True).data
 
         return Response(dataset)
@@ -215,6 +224,14 @@ class TempdatasetDetail(APIView):
 
         print("dataset\n", dataset)
         dataset = Temporary_datasetSerializer(dataset).data
+
+        publisher = User.objects.get(id=dataset['publisher']) 
+
+        dataset['email'] = publisher.email
+        dataset['first_name'] = publisher.first_name
+        dataset['last_name'] = publisher.last_name
+        dataset['username'] = publisher.username
+
         return Response(dataset)
 
     def put(self, request, datasetid, format=None):
@@ -269,6 +286,7 @@ class VersionList(APIView):
 
     def post(self, request, format=None):
 
+        
         dataset = Dataset.objects.get(id=request.data.get('dataset'))
 
         if dataset.publisher != request.user:
