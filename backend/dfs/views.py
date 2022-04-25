@@ -116,7 +116,11 @@ class DatasetDetail(APIView):
         publisher = User.objects.get(id=dataset['publisher']) 
 
 
-        dataset['publisher'] = UserSerializer(publisher).data
+        dataset['email'] = publisher.email
+        dataset['first_name'] = publisher.first_name
+        dataset['last_name'] = publisher.last_name
+        dataset['username'] = publisher.username
+
         dataset["versions"] = VersionSerializer(versions, many=True).data
 
         return Response(dataset)
@@ -222,7 +226,11 @@ class TempdatasetDetail(APIView):
         dataset = Temporary_datasetSerializer(dataset).data
 
         publisher = User.objects.get(id=dataset['publisher']) 
-        dataset['publisher'] = UserSerializer(publisher).data
+
+        dataset['email'] = publisher.email
+        dataset['first_name'] = publisher.first_name
+        dataset['last_name'] = publisher.last_name
+        dataset['username'] = publisher.username
 
         return Response(dataset)
 
