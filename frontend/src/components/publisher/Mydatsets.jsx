@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../templates/Navbar';
+import Card from '../templates/Card';
+import './index.css';
 
 
 // render the list of datasets using myDatasetslistitem component 
@@ -68,22 +70,21 @@ export default function Mydatasets() {
             <div className="myDatasets-heading" style={{marginTop:'20vh'}}>
                 <h2>MY DATASETS</h2>
             </div>
-            <div className="myDatasets-list">
+            
 
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                <List className='list' sx={{width: '100%', justifyContent:'center', alignItems:'center' }}>
                     {
                         datasets.map(
                             (dataset, index) => {
                                 console.log(dataset)
                                 return (
-                                < MyDatasetslistitem info={dataset} key={index} />
+                                < Card info={dataset} key={index} />
                                 )
                             }
                         )
                     }
                 </List>
 
-            </div>
         </div>
     );
 }

@@ -18,6 +18,7 @@ import Loginform from './components/templates/login';
 import Registerform from './components/templates/register';
 import Versionupdate from './components/publisher/Versionupdate';
 import Eachtempdatasetinfo from './components/admin/EachTempDatasetinfo';
+import Card from './components/templates/Card';
 
 
 
@@ -39,6 +40,8 @@ function App() {
         <Route path="/:id" element={<Eachdatasetinfo />} />
         <Route path="/newversion/:id" element={<Versionupdate />} />
         <Route path="/admincheck/:id" element={<Eachtempdatasetinfo />} />
+        <Route path="/card" element={<Card />} />
+
 
       </Routes>
 

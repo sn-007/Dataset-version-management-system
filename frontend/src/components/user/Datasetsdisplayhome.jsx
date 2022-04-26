@@ -6,6 +6,7 @@ import Datasetslist from './Datasetslist';
 import { useNavigate } from "react-router-dom"
 import { useState,useEffect } from 'react';
 import axios from 'axios';
+import Card from '../templates/Card';
 
 // import SearchBar from 'material-ui-search-bar';
 
@@ -68,13 +69,13 @@ export default function Datasetsdisplayhome() {
 
                 <br /><br /><br />
 
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                <List className='list' sx={{ width: '100%', alignSelf:'center', justifyContent:'center', alignItems:'center' }}>
                     {
                         datasets.map(
                             (dataset, index) => {
                                 console.log(dataset)
                                 return (
-                                    < Datasetslist info={dataset} key={index} />
+                                    < Card info={dataset} key={index} />
                                 )
                             }
                         )

@@ -21,6 +21,14 @@
     
 }
 
+.list{
+    display: flex;
+    flex-direction: column;
+    
+    
+
+}
+
 .FormContainer{
     display: flex;
     flex-direction: column;
