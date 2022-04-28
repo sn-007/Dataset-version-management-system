@@ -1,5 +1,5 @@
 import React from 'react'
-import './card.css'
+import './Versioncard.css'
 import { useNavigate } from 'react-router';
 
 
@@ -26,11 +26,13 @@ const capitalize = (str) => {
 
 
 
-export default function Card({info}) {
+export default function Versioncard({info}) {
     const navigate= useNavigate();
     return (
+        
+        
 
-        <div className='card-container' onClick={
+        <div className='version-card-container' onClick={
             (e) => {
                 //check if the target is a button or not
                 if (e.target.tagName === "a") {
@@ -40,57 +42,32 @@ export default function Card({info}) {
                 else {
                     //alert('navigated');
 
-                    navigate('/'+info.id);
+                    
                 }
             }
 
         }>
 
 
-            <div className='card-content'>
+            <div className='version-card-content'>
                 <div className="admin-title">
-                    <h3 ><u>{capitalize(info.name)}</u></h3>
+                    <h3 ><u>{capitalize("Version " + info.version)}</u></h3>
                 </div>
 
                 <div className="admin-body">
-                    <p>{trim(info.description, 10000)}</p>
+                    <p>{trim(info.comment, 10000)}</p>
                 </div>
 
             </div>
 
-            <div className="btn" onClick={(e) => { e.stopPropagation(); }}>
+            <div className="version-btn" onClick={(e) => { e.stopPropagation(); }}>
 
 
-                <button className='source'>
-                    <a href={info.source} target='_blank'>
-                        SOURCE
+                <button className='Download'>
+                    <a href={info.reference} target='_blank'>
+                        Download
                     </a>
                 </button>
-
-
-
-
-
-                <button className='viewmore'
-                    onClick={(e) => { e.stopPropagation(); navigate('/' + info.id); }}>
-                    
-                    <a>
-                        VIEW MORE
-                    </a>
-                </button>
-
-
-
-                <button>
-                    <a className='download' onClick={(e) => { e.stopPropagation();}} href={info.reference} target='_blank'>
-                        DOWNLOAD
-                    </a>
-                </button>
-
-
-
-
-
 
             </div>
 

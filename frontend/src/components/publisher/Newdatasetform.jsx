@@ -230,7 +230,7 @@ const Newdatasetform = () => {
                     </div>
 
 
-                    <Button variant="contained" color="primary" type="submit">
+                    <Button variant="contained" color="primary" type="submit" disabled={load}>
                         Submit
                     </Button>
 

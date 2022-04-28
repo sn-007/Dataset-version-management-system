@@ -234,11 +234,11 @@ export default function Eachtempdatasetinfo() {
 
             <div className='button-container'>
 
-                <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'red' }} startIcon={<ClearIcon />} onClick={(e) => { handleReject(dataset); }}>
+                <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'red' }} startIcon={<ClearIcon />} onClick={(e) => { handleReject(dataset); }} disabled={load}>
                     Reject
                 </Button>
 
-                <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'green' }} endIcon={<CheckIcon />} onClick={(e) => { handleAccept(dataset); }}>
+                <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'green' }} endIcon={<CheckIcon />} onClick={(e) => { handleAccept(dataset); }} disabled={load}>
                     Accept
                 </Button>
 

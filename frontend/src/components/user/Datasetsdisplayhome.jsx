@@ -54,7 +54,7 @@ export default function Datasetsdisplayhome() {
             <Navbar />
 
             <div className="myDatasets-heading" style={{marginTop:'10vh'}}>
-                <h2 >DATA FOUNDATION</h2>
+                <h2 style={{fontSize:'xx-large'}}>DATA FOUNDATION</h2>
             </div>
 
             <div className="myDatasets-list">

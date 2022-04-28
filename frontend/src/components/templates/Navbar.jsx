@@ -76,6 +76,10 @@ function Navbar() {
         navigate("/mydatasets");
     }
 
+    const sendMessage3 = () => {
+        navigate("/mypendingdatasets");
+    }
+
     const sendMessage2 = () => {
 
         axios.get("http://10.1.38.115:8000/users/logout/",
@@ -148,6 +152,22 @@ function Navbar() {
                                 }}
                             >
                                 My Data Sets
+                            </Button>
+
+                        }
+
+                        {
+                            publisher &&
+                            <Button onClick={sendMessage3}
+
+                                sx={{
+                                    my: 2, color: 'white', display: 'block', "&:hover": {
+                                        backgroundColor: 'white',
+                                        color: 'blue',
+                                    }
+                                }}
+                            >
+                                Pending Data Sets
                             </Button>
 
                         }

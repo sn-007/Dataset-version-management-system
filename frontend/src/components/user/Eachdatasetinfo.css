@@ -32,3 +32,42 @@
     justify-content: space-evenly;
     
   }
+
+  .list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-size: large;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info-version-heading{
+    margin-left: 0.6vh;
+    margin-top: 5vh;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2vh;
+  
+  }
+
+  
+
+  .version-add-btn:hover{
+    background-color: #87CEFA;
+  }
+
+  .version-add-btn{
+
+    
+    
+    
+    
+    border:none;
+    transition:0.2s;
+    
+
+
+  }

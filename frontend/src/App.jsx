@@ -19,6 +19,7 @@ import Registerform from './components/templates/register';
 import Versionupdate from './components/publisher/Versionupdate';
 import Eachtempdatasetinfo from './components/admin/EachTempDatasetinfo';
 import Card from './components/templates/Card';
+import Mypendingdatasets from './components/publisher/Mypendingdatasets';
 
 
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/newversion/:id" element={<Versionupdate />} />
         <Route path="/admincheck/:id" element={<Eachtempdatasetinfo />} />
         <Route path="/card" element={<Card />} />
+        <Route path="/mypendingdatasets" element={<Mypendingdatasets />} />
 
 
       </Routes>

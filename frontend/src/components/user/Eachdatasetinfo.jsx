@@ -22,6 +22,7 @@ import TableRow from '@mui/material/TableRow';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import Button from '@mui/material/Button';
+import Versioncard from './Versioncard';
 
 import "./Eachdatasetinfo.css";
 
@@ -90,109 +91,6 @@ export default function Eachdatasetdatasetinfo() {
 
     return (
 
-
-        // <div className="myDatasets" >
-        //     <Navbar />
-        //     <div className="myDatasets-heading" style={{ marginTop: '15vh' }}>
-
-        //         <h1>{dataset.name}</h1>
-
-        //     </div>
-
-        //     <div>
-        //         <Box sx={{ width: '100%' }}>
-
-
-
-        //             <Stack direction="row" spacing={3}>
-        //                 <Avatar sx={{ width: '10vh', height: '10vh', bgcolor: blue[500] }}>
-        //                     {dataset.username.charAt(0).toUpperCase()}
-        //                 </Avatar>
-
-        //                 <Box pt={1} sx={{ height: '20vh', width: '100vh' }} >
-        //                     <Typography variant='h5' style={{ color: "black", marginTop: '2vh' }} >
-        //                         {dataset.username.toUpperCase()}
-        //                     </Typography>
-        //                     <Typography variant='body1' >
-
-        //                     </Typography>
-        //                 </Box>
-        //             </Stack>
-
-        //             <h2>Description</h2>
-
-
-        //             <Typography mt={1} variant="body1" gutterBottom>
-        //                 {dataset.description}
-        //             </Typography>
-
-        //             <Typography mt={1} variant="body1" gutterBottom>
-        //                 {convertDate(dataset.date)}
-        //             </Typography>
-
-        //             <Typography mt={1} variant="body1" gutterBottom>
-        //                 <a href={dataset.source}>
-        //                     Source
-        //                 </a>
-        //             </Typography>
-
-
-
-
-
-
-
-
-        //             <div style={{ display: 'flex', flexDirection: 'row' }}>
-        //                 {/* <Typography pt={4} variant="h4">
-        //                     versions
-        //                 </Typography> */}
-
-        //                 <h2 style={{ paddingTop: '6vh' }}>Versions</h2>
-
-        //                 {publisher &&
-        //                 <AddCircleOutlineIcon sx={{ color: 'black', fontSize: '5vh', marginLeft: '2vh', marginTop: 5 }} onClick={() => {navigate("/newversion/" + params.id)}} />
-
-        //                 }
-
-
-
-
-
-
-
-
-
-        //                 {/* <AddCircleOutlineIcon sx={{ paddingTop: '5vh', marginLeft: 2, marginTop: 1.3 }} onClick={() => {
-        //                     navigate('/newversion/' + params.id);
-        //                 }} /> */}
-
-
-
-        //             </div>
-
-
-        //         </Box>
-
-
-
-
-        //         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        //             {
-        //                 dataset.versions.map(
-        //                     (version, index) => {
-        //                         console.log(version);
-        //                         return (
-        //                             //<h1 key={index}>{version.reference}</h1>
-        //                             < Datasetversions info={version} key={index} />
-        //                         )
-        //                     }
-        //                 )
-        //             }
-        //         </List>
-
-        //     </div>
-        // </div>
         <div className='info-container'>
 
 
@@ -234,24 +132,37 @@ export default function Eachdatasetdatasetinfo() {
 
                 </Table>
 
+            </div>
 
+            <div className='info-version-heading'>
+                <h1>Versions</h1>
+                {publisher &&
+                    <AddCircleOutlineIcon className='version-add-btn' sx={{ color: 'black', fontSize: '4vh', marginLeft: '2vh', marginTop:'1.15vh'}} onClick={() => { navigate("/newversion/" + params.id) }} />
 
+                }
             </div>
 
 
 
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                     {
-                         dataset.versions.map(
-                             (version, index) => {
-                                 console.log(version);
-                                 return (
-                                     < Datasetversions info={version} key={index} />
-                                 )
-                             }
-                         )
-                     }
+
+
+            <List className='list' sx={{ width: '100%' }}>
+                {
+                    dataset.versions.map(
+                        (version, index) => {
+                            console.log(version);
+                            return (
+                                < Versioncard info={version} key={index} />
+                            )
+                        }
+                    )
+                }
             </List>
+
+
+
+
+
         </div>
 
 

@@ -25,8 +25,10 @@ const convertDate = (date) => {
 
 export default function Datasetversions({ info }) {
     return (
+        
 
-        <List sx={{ '&:hover': { backgroundColor: '#eeeeee', justifyContent: 'center' } }}>
+<List>
+  
             <Card>
                 <CardActionArea href={info.reference}>
                     <ListItem>
@@ -70,6 +72,10 @@ export default function Datasetversions({ info }) {
                 </CardActionArea>
             </Card>
 
+
         </List>
+
+        
+
     );
 }
