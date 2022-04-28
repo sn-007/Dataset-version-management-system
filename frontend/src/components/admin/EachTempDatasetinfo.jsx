@@ -1,20 +1,26 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 
-import Stack from '@mui/material/Stack';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Datasetversions from '../user/Datasetversions';
-import Avatar from '@mui/material/Avatar';
-import { green, pink, blue } from '@mui/material/colors';
-import "./index.css";
+
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import {useNavigate} from "react-router-dom"
+
+import { useNavigate } from "react-router-dom"
 import Navbar from '../templates/Navbar';
+import './EachTempDatasetinfo.css';
+import Button from '@mui/material/Button';
+import { TailSpin } from "react-loader-spinner";
+
+
+import Table from '@mui/material/Table';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+
+
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
+import { useAlert } from 'react-alert';
 
 const convertDate = (date) => {
 
@@ -25,11 +31,108 @@ const convertDate = (date) => {
     return day + "/" + month + "/" + year;
 }
 
+//styled in myui
 
+
+
+// get the dataset information and display the information in table format
 export default function Eachtempdatasetinfo() {
 
     const params = useParams();
     const navigate = useNavigate();
+    const alert = useAlert();
+    const [load, setLoad] = useState(false);
+
+
+    // useEffect(() => {
+    //     const initialValue = document.body.style.zoom;
+
+    //     // Change zoom level on mount
+    //     document.body.style.zoom = "120%";
+
+    //     return () => {
+    //       // Restore default value
+    //       document.body.style.zoom = initialValue;
+    //     };
+    //   }, []);
+    const handleReject = (info) => {
+
+
+
+
+
+        let url = 'http://10.1.38.115:8000/api/reject/' + info.id;
+        setLoad(true);
+        axios.get(url, {
+            headers: {
+                'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
+            }
+
+        })
+            .then(res => {
+                setLoad(false);
+                console.log("res", res);
+                alert.show("Rejected!", { type: 'success' });
+                navigate("/approve");
+            }
+            )
+            .catch(err => {
+                setLoad(false);
+                console.log("err request", err.request);
+                console.log("err response", err.response);
+                if (err.response.data.reference) {
+                    alert.show(err.response.data.reference[0], { type: 'error' })
+                }
+                else {
+                    alert.show(err.response.data.detail, { type: 'error' });
+                }
+
+
+
+
+            }
+            )
+
+    };
+
+    const handleAccept = (info) => {
+
+
+        let url = 'http://10.1.38.115:8000/api/accept/' + info.id;
+        setLoad(true);
+        axios.get(url, {
+            headers: {
+                'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
+            }
+
+        })
+            .then(res => {
+                setLoad(false);
+                console.log("res", res);
+                alert.show("Accepted!", { type: 'success' });
+                navigate("/approve");
+            }
+            )
+            .catch(err => {
+                setLoad(false);
+                console.log("err request", err.request);
+                console.log("err response", err.response);
+                if (err.response.data.reference) {
+                    alert.show(err.response.data.reference[0], { type: 'error' })
+                }
+                else {
+                    alert.show(err.response.data.detail, { type: 'error' });
+                }
+
+
+
+
+            }
+            )
+
+    }
+
+
 
 
     const defaultDataset = {
@@ -72,71 +175,109 @@ export default function Eachtempdatasetinfo() {
     }, []);
 
 
-    
+
 
 
     return (
 
 
+        <div className='tempContainer'>
 
-        <div className="myDatasets" style={{paddingLeft:'1vw'}}>
-            <Navbar/>
-            <div className="myDatasets-heading" style={{marginTop:'10vh'}}>
 
+            <Navbar />
+
+
+            <div className='heading'>
                 <h1>{dataset.name}</h1>
+            </div>
+
+            {/*render a table to show the information of the dataset with coloumns as headers*/}
+            <div className="table-container">
+
+
+
+                <Table aria-label="simple table">
+
+                    <TableRow>
+                        <TableCell className='table-head'><b>Name</b></TableCell>
+                        <TableCell>{dataset.name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell className='table-head'><b>Description</b></TableCell>
+                        <TableCell>{dataset.description}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell className='table-head'><b>Publisher</b></TableCell>
+                        <TableCell>{dataset.first_name + " " + dataset.last_name}</TableCell>
+                    </TableRow>
+                    <TableRow  >
+                        <TableCell className='table-head'><b>Date</b></TableCell>
+                        <TableCell>{convertDate(dataset.date)}</TableCell>
+                    </TableRow>
+                    <TableRow >
+                        <TableCell className='table-head'><b>Source</b></TableCell>
+                        <TableCell><a target='_blank' href={dataset.source} style={{ cursor: 'pointer', color: 'green' }}>{dataset.source}</a></TableCell>
+                    </TableRow>
+
+                    <TableRow >
+                        <TableCell className='table-head'><b>File</b></TableCell>
+                        <TableCell><a target='_blank' href={dataset.reference} style={{ cursor: 'pointer', color: 'green' }}>Download</a></TableCell>
+                    </TableRow>
+
+
+                </Table>
+
+
 
             </div>
 
-            <div>
-                <Box sx={{ width: '100%' }}>
 
+            <div className='button-container'>
 
+                <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'red' }} startIcon={<ClearIcon />} onClick={(e) => { handleReject(dataset); }}>
+                    Reject
+                </Button>
 
-                    <Stack direction="row" spacing={3}>
-                        <Avatar sx={{ width: '10vh', height: '10vh', bgcolor: blue[500] }}>
-                            {dataset.username.charAt(0).toUpperCase()}
-                        </Avatar>
-
-                        <Box pt={1} sx={{ height: '20vh', width: '100vh' }} >
-                            <Typography variant='h5' style={{ color: "black", marginTop:'2vh' }} >
-                            {dataset.username.toUpperCase()}
-                            </Typography>
-                            <Typography variant='body1' >
-                                
-                            </Typography>
-                        </Box>
-                    </Stack>
-
-                    <h2>Description</h2>
-
-
-                    <Typography mt={1} variant="body1" gutterBottom>
-                        {dataset.description}
-                    </Typography>
-
-                    <Typography mt={1} variant="body1" gutterBottom>
-                        {convertDate(dataset.date)}
-                    </Typography>
-
-                    <Typography mt={1} variant="body1" gutterBottom>
-                        <a href={dataset.source}>
-                            Source
-                        </a>
-                    </Typography>
-
-
-
-
-
-
-
-
-    
-
-                </Box>
+                <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'green' }} endIcon={<CheckIcon />} onClick={(e) => { handleAccept(dataset); }}>
+                    Accept
+                </Button>
 
 
             </div>
+
+            {
+                        load &&
+
+                        <div
+                            style={{
+                                width: "100%",
+                                height: "100",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                position: "absolute",
+                                top: "5%",
+                            }}
+                        >
+                            <TailSpin color="#00BFFF" height={160} width={160} ariaLabel='loading' />
+                            
+                        </div>
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
     );

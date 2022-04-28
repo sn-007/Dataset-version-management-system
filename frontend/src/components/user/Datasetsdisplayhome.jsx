@@ -65,9 +65,9 @@ export default function Datasetsdisplayhome() {
                     
 
                 </Stack>
-                <SearchBar />
+                {/* <SearchBar />
 
-                <br /><br /><br />
+                <br /><br /><br /> */}
 
                 <List className='list' sx={{ width: '100%', alignSelf:'center', justifyContent:'center', alignItems:'center' }}>
                     {

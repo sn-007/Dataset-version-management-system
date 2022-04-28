@@ -248,7 +248,7 @@ const Newdatasetform = () => {
                                 top: "5%",
                             }}
                         >
-                            <TailSpin color="#00BFFF" height={160} width={160} color ='blue' ariaLabel='loading' />
+                            <TailSpin color="#00BFFF" height={160} width={160} ariaLabel='loading' />
                             
                         </div>
 

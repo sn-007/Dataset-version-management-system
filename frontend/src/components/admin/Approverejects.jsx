@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Audio } from 'react-loader-spinner';
 import { useNavigate } from 'react-router';
 import Navbar from '../templates/Navbar';
+import AdminCard from './AdminCard';
 //https://www.npmjs.com/package/react-loader-spinner
 //https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls
 // render the list of datasets using myDatasetslistitem component 
@@ -101,13 +102,14 @@ function Approverejects() {
 
             
             <div className="approverejects-list">
-                <List>
+                <List className='list' sx={{ width: '100%', alignSelf:'center', justifyContent:'center', alignItems:'center' }}>
                     {
                         datasets.map(
                             (dataset, index) => {
                                 console.log(dataset)
                                 return (
-                                    < Approverejectslistitem info={dataset} key={index} />
+                                    // < Approverejectslistitem info={dataset} key={index} />
+                                    <AdminCard info={dataset} key={index} />
 
                                 )
                             }

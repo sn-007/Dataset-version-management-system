@@ -1,6 +1,7 @@
 import React from 'react'
-import './card.css'
 import { useNavigate } from 'react-router';
+import './AdminCard.css'
+
 
 
 
@@ -26,35 +27,11 @@ const capitalize = (str) => {
 
 
 
-export default function Card({info}) {
-    const navigate= useNavigate();
+export default function AdminCard({ info }) {
+    const navigate = useNavigate();
     return (
-        
-        // <div className='card-container' onClick={()=>{navigate('/'+info.id)}}>
 
-
-        //     <div className='card-content'>
-        //         <div className="card-title">
-        //             <h3 ><u>{capitalize(info.name)}</u></h3>
-        //         </div>
-
-        //         <div className="card-body">
-        //             <p>{trim(info.description,350)}</p>
-        //         </div>
-
-        //     </div>
-
-        //     <div className="btn">
-        //         <button>
-        //             <a>
-        //                 VIEW MORE
-        //             </a>
-        //         </button>
-        //     </div>
-
-        // </div>
-
-        <div className='card-container' onClick={
+        <div className='admin-container' onClick={
             (e) => {
                 //check if the target is a button or not
                 if (e.target.tagName === "a") {
@@ -64,14 +41,15 @@ export default function Card({info}) {
                 else {
                     //alert('navigated');
 
-                    navigate('/'+info.id);
+                    let url = '/admincheck/' + info.id;
+                    navigate(url);
                 }
             }
 
         }>
 
 
-            <div className='card-content'>
+            <div className='admin-content'>
                 <div className="admin-title">
                     <h3 ><u>{capitalize(info.name)}</u></h3>
                 </div>
@@ -82,7 +60,7 @@ export default function Card({info}) {
 
             </div>
 
-            <div className="btn" onClick={(e) => { e.stopPropagation(); }}>
+            <div className="adm-btn" onClick={(e) => { e.stopPropagation(); }}>
 
 
                 <button className='source'>
@@ -95,9 +73,8 @@ export default function Card({info}) {
 
 
 
-                <button className='viewmore'
-                    onClick={(e) => { e.stopPropagation(); navigate('/' + info.id); }}>
-                    
+                <button className='viewmore' onClick={(e)=>{e.stopPropagation();let url = '/admincheck/' + info.id;
+                    navigate(url);}}>
                     <a>
                         VIEW MORE
                     </a>
@@ -120,7 +97,5 @@ export default function Card({info}) {
 
         </div>
 
-
-        
     )
 }

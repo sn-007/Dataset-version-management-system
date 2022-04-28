@@ -1,0 +1,34 @@
+.tempContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: large;
+  
+}
+
+
+.heading{
+  color: blue;
+
+}
+
+.table-container{
+  width: 60%;
+  font-size: xx-large;
+}
+
+.table-head{
+  color: blue;
+  
+}
+
+.button-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 10vh;
+  justify-content: space-evenly;
+  
+}
