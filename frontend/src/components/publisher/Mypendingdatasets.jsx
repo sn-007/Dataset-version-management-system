@@ -77,7 +77,7 @@ export default function Mypendingdatasets() {
                             (dataset, index) => {
                                 console.log(dataset)
                                 return (
-                                < Card info={dataset} key={index} />
+                                < Card info={dataset} block={true} key={index} />
                                 )
                             }
                         )

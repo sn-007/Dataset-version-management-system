@@ -86,6 +86,12 @@ const Newdatasetform = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        //through an alert if reference is not selected
+        if (formValues.reference == null) {
+            alert.show("Please select a file", { type: 'error' });
+            return;
+        }
+        
 
 
 
@@ -117,6 +123,7 @@ const Newdatasetform = () => {
                 console.log("res", res);
                 alert.show("Dataset created successfully", { type: 'success' });
                 setFormValues(defaultValues);
+                navigate("/mypendingdatasets");
             }
             )
             .catch((err) => {
@@ -217,7 +224,7 @@ const Newdatasetform = () => {
                         <Button variant='contained' color="primary" onClick={handleClick}>
                             Upload a file
                         </Button>
-                        <input type="file" style={{ display: 'none' }} ref={hiddenFileInput} onChange={handleChange} required />
+                        <input type="file" style={{ display: 'none' }} ref={hiddenFileInput} onChange={handleChange} />
                         {
                             formValues.reference &&
 

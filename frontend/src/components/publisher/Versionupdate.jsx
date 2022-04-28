@@ -78,6 +78,10 @@ const Versionupdate = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (formValues.reference == null) {
+            alert.show("Please select a file", { type: 'error' });
+            return;
+        }
 
         var formData = new FormData();
         formData.append('comment', formValues.comment);
@@ -100,6 +104,7 @@ const Versionupdate = () => {
             setLoad(false);
             alert.show("Version updated successfully", {type: "success"});
             setFormValues(defaultValues);
+            navigate("/"+params.id);
         })
         .catch((err) => {
             setLoad(false);
@@ -165,7 +170,7 @@ const Versionupdate = () => {
                     <Button variant='contained' color="primary" onClick={handleClick}>
                         Upload a file
                     </Button>
-                    <input type="file" style={{ display: 'none' }} ref={hiddenFileInput} onChange={handleChange} required />
+                    <input type="file" style={{ display: 'none' }} ref={hiddenFileInput} onChange={handleChange} />
                     {
                         formValues.reference &&
 
@@ -178,7 +183,7 @@ const Versionupdate = () => {
                 </div>
 
 
-                <Button variant="contained" color="primary" type="submit">
+                <Button variant="contained" color="primary" type="submit" disabled={load}>
                     Submit
                 </Button>
 
@@ -196,7 +201,7 @@ const Versionupdate = () => {
                             top: "5%",
                         }}
                     >
-                        <TailSpin color="#00BFFF" height={160} width={160} color ='blue' ariaLabel='loading' />
+                        <TailSpin color="#00BFFF" height={160} width={160}  ariaLabel='loading' />
                         
                     </div>
 

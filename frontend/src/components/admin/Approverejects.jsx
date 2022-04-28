@@ -1,6 +1,5 @@
 import React from 'react'
 import './index.css'
-import Approverejectslistitem from './Approverejectslistitem'
 import List from '@mui/material/List';
 import { useState, useEffect } from 'react';
 import axios from 'axios';

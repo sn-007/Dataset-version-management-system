@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import "./index.css";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from 'axios';
 import Button from "@mui/material/Button";
 import backendConstants from "./backendConstants";
@@ -38,44 +38,44 @@ const Loginform = () => {
         // http POST ":8000/users/login/" email="pub2@gmail.com" password="password"
         let url = backendConstants.url + "users/login/";
         axios.post('http://10.1.38.115:8000/users/login/', formValues)
-        .then(res => {
+            .then(res => {
 
-            let user = res.data;
-            localStorage.setItem('user', JSON.stringify(user));
+                let user = res.data;
+                localStorage.setItem('user', JSON.stringify(user));
 
-            console.log("user",user);
+                console.log("user", user);
 
-            if (user.group == "admin") {
-                navigate("/approve");
-            } else if (user.group == "publisher") {
-                navigate("/mydatasets");
-            } else {
-                navigate("/");
-            }
-
-        }
-        )
-        .catch(err => {
-            console.log("err", err);
-            if (err.response.status === 400) {
-                
-                alert.show("Invalid Credentials",{type:'error'});
-            }
-            else if (err.response.status === 500) {
-                
-                alert.show("Internal server error",{type:'error'});
+                if (user.group == "admin") {
+                    navigate("/approve");
+                } else if (user.group == "publisher") {
+                    navigate("/mydatasets");
+                } else {
+                    navigate("/");
+                }
 
             }
-            else {
-                alert.show({err},{type:'error'});
-                
+            )
+            .catch(err => {
+                console.log("err", err);
+                if (err.response.status === 400) {
+
+                    alert.show("Invalid Credentials", { type: 'error' });
+                }
+                else if (err.response.status === 500) {
+
+                    alert.show("Internal server error", { type: 'error' });
+
+                }
+                else {
+                    alert.show({ err }, { type: 'error' });
+
+                }
             }
-        }
-        )
+            )
 
 
     };
-    
+
 
     useEffect(() => {
         // if user already logged in, redirect to home page
@@ -103,7 +103,7 @@ const Loginform = () => {
                     maxHeight: { xs: 233, md: 167 },
                     maxWidth: { xs: 350, md: 250 },
                     alignSelf: "center",
-                    
+
                 }}
                 src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
             />
@@ -115,6 +115,7 @@ const Loginform = () => {
 
 
                     <TextField
+                        required
                         id="email-input"
                         name="email"
                         label="Email"
@@ -126,6 +127,7 @@ const Loginform = () => {
                     />
 
                     <TextField
+                        required
                         id="password-input"
                         name="password"
                         label="Password"
@@ -136,17 +138,17 @@ const Loginform = () => {
                         sx={{ width: '30%', margin: '10px' }}
                     />
 
-                    <div style ={{flexDirection:'row', display:'flex', marginTop:'5vh'}} >
+                    <div style={{ flexDirection: 'row', display: 'flex', marginTop: '5vh' }} >
 
-                    <Button variant="contained" color="primary" type="submit"sx={{marginRight:'20px', width:'7vw'}}>
-                        Login
-                    </Button>
+                        <Button variant="contained" color="primary" type="submit" sx={{ marginRight: '20px', width: '7vw' }}>
+                            Login
+                        </Button>
 
-                    <Button variant="contained" color="primary" type="submit" sx={{marginLeft:'20px', width:'8vw'}} 
-                    onClick = { ()=>{navigate("/register",{}); } }
-                    >
-                        Register
-                    </Button>
+                        <Button variant="contained" color="primary" type="submit" sx={{ marginLeft: '20px', width: '8vw' }}
+                            onClick={() => { navigate("/register", {}); }}
+                        >
+                            Register
+                        </Button>
 
 
 

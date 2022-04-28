@@ -2,7 +2,6 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
-import Datasetslist from './Datasetslist';
 import { useNavigate } from "react-router-dom"
 import { useState,useEffect } from 'react';
 import axios from 'axios';
@@ -10,7 +9,6 @@ import Card from '../templates/Card';
 
 // import SearchBar from 'material-ui-search-bar';
 
-import SearchBar from './search'
 import Navbar from '../templates/Navbar';
 
 

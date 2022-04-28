@@ -106,6 +106,7 @@ const Registerform = () => {
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
 
                         <TextField
+                        required
                             id="first_name-input"
                             name="first_name"
                             label="First Name"
@@ -118,6 +119,7 @@ const Registerform = () => {
                         />
 
                         <TextField
+                        required
                             id="last_name-input"
                             name="last_name"
                             label="Last Name"
@@ -132,6 +134,7 @@ const Registerform = () => {
                     </div>
 
                     <TextField
+                        required
                         id="username-input"
                         name="username"
                         label="Username"
@@ -144,6 +147,7 @@ const Registerform = () => {
                     />
 
                     <TextField
+                        required
                         id="email-input"
                         name="email"
                         label="Email"
@@ -156,6 +160,7 @@ const Registerform = () => {
                     />
 
                     <TextField
+                        required
                         id="password-input"
                         name="password"
                         label="Password"
@@ -168,6 +173,7 @@ const Registerform = () => {
                     />
 
                     <TextField
+                        required
                         id="confirm-password-input"
                         name="confirmPassword"
                         label="Confirm Password"

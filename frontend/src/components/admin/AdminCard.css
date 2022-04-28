@@ -35,7 +35,8 @@
 .admin-container:hover{
     box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
     transform: scale(1.1);
-    background-color: #FFF8DC;
+    /* background-color: #FFF8DC; */
+    background-color: #EBF2F8;
 
 
 }

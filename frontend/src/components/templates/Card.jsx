@@ -1,6 +1,8 @@
 import React from 'react'
 import './card.css'
 import { useNavigate } from 'react-router';
+//alert from react-alert
+import { useAlert } from 'react-alert'
 
 
 
@@ -26,8 +28,9 @@ const capitalize = (str) => {
 
 
 
-export default function Card({info}) {
-    const navigate= useNavigate();
+export default function Card({ info, block }) {
+    const navigate = useNavigate();
+    const alert = useAlert();
     return (
 
         <div className='card-container' onClick={
@@ -39,8 +42,10 @@ export default function Card({info}) {
                 }
                 else {
                     //alert('navigated');
+                    if (!block) {
 
-                    navigate('/'+info.id);
+                        navigate('/' + info.id);
+                    }
                 }
             }
 
@@ -72,8 +77,18 @@ export default function Card({info}) {
 
 
                 <button className='viewmore'
-                    onClick={(e) => { e.stopPropagation(); navigate('/' + info.id); }}>
-                    
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (!block) {
+
+                            navigate('/' + info.id);
+                        }
+                        else{
+                            //show alert with a message
+                            alert.show('Wait for Confirmation from Admin');
+                        }
+                    }} >
+
                     <a>
                         VIEW MORE
                     </a>
@@ -82,7 +97,7 @@ export default function Card({info}) {
 
 
                 <button>
-                    <a className='download' onClick={(e) => { e.stopPropagation();}} href={info.reference} target='_blank'>
+                    <a className='download' onClick={(e) => { e.stopPropagation(); }} href={info.reference} target='_blank'>
                         DOWNLOAD
                     </a>
                 </button>
@@ -97,6 +112,6 @@ export default function Card({info}) {
         </div>
 
 
-        
+
     )
 }
