@@ -90,7 +90,7 @@ const Versionupdate = () => {
         formData.append('dataset', formValues.dataset);
 
         setLoad(true);
-        axios.post("http://10.1.38.115:8000/api/versions/", formData, {
+        axios.post("api/api/versions/", formData, {
             headers:{
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
             }

@@ -37,7 +37,7 @@ const Loginform = () => {
 
         // http POST ":8000/users/login/" email="pub2@gmail.com" password="password"
         let url = backendConstants.url + "users/login/";
-        axios.post('http://10.1.38.115:8000/users/login/', formValues)
+        axios.post('api/users/login/', formValues)
             .then(res => {
 
                 let user = res.data;

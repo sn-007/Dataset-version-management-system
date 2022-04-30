@@ -109,7 +109,7 @@ const Newdatasetform = () => {
 
         let url = backendConstants.url + "tempdatasets/";
         setLoad(true);
-        axios.post('http://10.1.38.115:8000/api/tempdatasets/', formData, {
+        axios.post('api/api/tempdatasets/', formData, {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
             }

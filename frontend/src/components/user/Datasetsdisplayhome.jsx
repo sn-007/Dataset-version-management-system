@@ -31,9 +31,9 @@ export default function Datasetsdisplayhome() {
         }
     }, [navigate]);
 
-    // make request to "http://10.1.38.115:8000/api/datasets/" to get all the datasets and store them in datasets
+    // make request to "api/api/datasets/" to get all the datasets and store them in datasets
     useEffect(() => {
-        axios.get("http://10.1.38.115:8000/api/datasets/", {
+        axios.get("/api/api/datasets/", {
             headers: {}
         })
             .then(res => {

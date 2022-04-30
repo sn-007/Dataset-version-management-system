@@ -61,7 +61,7 @@ export default function Eachtempdatasetinfo() {
 
 
 
-        let url = 'http://10.1.38.115:8000/api/reject/' + info.id;
+        let url = 'api/api/reject/' + info.id;
         setLoad(true);
         axios.get(url, {
             headers: {
@@ -98,7 +98,7 @@ export default function Eachtempdatasetinfo() {
     const handleAccept = (info) => {
 
 
-        let url = 'http://10.1.38.115:8000/api/accept/' + info.id;
+        let url = 'api/api/accept/' + info.id;
         setLoad(true);
         axios.get(url, {
             headers: {
@@ -151,7 +151,7 @@ export default function Eachtempdatasetinfo() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        axios.get("http://10.1.38.115:8000/api/tempdatasets/" + params.id, {
+        axios.get("api/api/tempdatasets/" + params.id, {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
             }

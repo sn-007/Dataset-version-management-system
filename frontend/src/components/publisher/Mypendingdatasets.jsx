@@ -37,7 +37,7 @@ export default function Mypendingdatasets() {
         
 
         if (localStorage.getItem('user') !== null) {
-        axios.get("http://10.1.38.115:8000/api/tempdatasets/", {
+        axios.get("api/api/tempdatasets/", {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
                 

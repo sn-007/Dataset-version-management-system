@@ -57,7 +57,7 @@ export default function Eachdatasetdatasetinfo() {
     const [publisher, setPublisher] = React.useState(false);
 
     useEffect(() => {
-        axios.get("http://10.1.38.115:8000/api/datasets/" + params.id, {
+        axios.get("api/api/datasets/" + params.id, {
             headers: {}
         })
 

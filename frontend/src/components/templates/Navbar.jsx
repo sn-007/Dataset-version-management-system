@@ -82,7 +82,7 @@ function Navbar() {
 
     const sendMessage2 = () => {
 
-        axios.get("http://10.1.38.115:8000/users/logout/",
+        axios.get("api/users/logout/",
             {
                 headers: {
                     'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,

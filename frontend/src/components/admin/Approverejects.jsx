@@ -57,12 +57,12 @@ function Approverejects() {
     }, [navigate]);
 
 
-    //make get request to ""http://10.1.38.115:8000/api/tempdatasets/" to get all the datasets and store it in datasets
+    //make get request to ""api/api/tempdatasets/" to get all the datasets and store it in datasets
     useEffect(() => {
         
 
         if (localStorage.getItem('user')) {
-            axios.get("http://10.1.38.115:8000/api/tempdatasets/", {
+            axios.get("api/api/tempdatasets/", {
                 headers: {
                     'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
 

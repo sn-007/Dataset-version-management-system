@@ -51,7 +51,7 @@ const Registerform = () => {
         // http POST ":8000/users/register/"
         let url = backendConstants.url + "users/register/";
         console.log(url)
-        axios.post("http://10.1.38.115:8000/users/register/", formValues)
+        axios.post("api/users/register/", formValues)
             .then(res => {
                 let user = res.data;
                 localStorage.setItem("user", JSON.stringify(user));

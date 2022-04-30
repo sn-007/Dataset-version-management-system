@@ -37,7 +37,7 @@ export default function Mydatasets() {
         
 
         if (localStorage.getItem('user') !== null) {
-        axios.get("http://10.1.38.115:8000/api/datasets/", {
+        axios.get("api/api/datasets/", {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
                 
