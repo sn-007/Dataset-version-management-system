@@ -18,6 +18,7 @@ export default function Mypendingdatasets() {
     
     let navigate = useNavigate();
     let [datasets, setDatasets] = useState([]);
+//setting conditions based on user authentication==publisher or not
 
     useEffect(() => {
         if (localStorage.getItem('user')) {
@@ -35,9 +36,9 @@ export default function Mypendingdatasets() {
 
     useEffect(() => {
         
-
+//retriving information on pending datasets for the particular user
         if (localStorage.getItem('user') !== null) {
-        axios.get("api/api/tempdatasets/", {
+        axios.get("http://10.1.38.115:8000/api/tempdatasets/", {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
                 
@@ -70,6 +71,7 @@ export default function Mypendingdatasets() {
                 <h2>MY PENDING DATASETS</h2>
             </div>
             
+            {/* //mapping the pending datasets of the particular publsiher to the Card for viewing*/}
 
                 <List className='list' sx={{width: '100%', justifyContent:'center', alignItems:'center' }}>
                     {

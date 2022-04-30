@@ -8,18 +8,15 @@ import axios from 'axios';
 import Button from "@mui/material/Button";
 import backendConstants from "./backendConstants";
 import { useAlert } from 'react-alert'
-
+import Navbar from "./Navbar";
 
 const defaultValues = {
     email: "",
     password: "",
 };
-
 //login form for publisher and admin
 const Loginform = () => {
-
     const alert = useAlert();
-
     const [formValues, setFormValues] = useState(defaultValues);
     let navigate = useNavigate();
 
@@ -30,14 +27,13 @@ const Loginform = () => {
             [name]: value,
         });
     };
-
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formValues);
 
-        // http POST ":8000/users/login/" email="pub2@gmail.com" password="password"
         let url = backendConstants.url + "users/login/";
-        axios.post('api/users/login/', formValues)
+        //posting the values written into the backend through axios
+        axios.post('http://10.1.38.115:8000/users/login/', formValues)
             .then(res => {
 
                 let user = res.data;
@@ -55,6 +51,7 @@ const Loginform = () => {
 
             }
             )
+            //error handler in axios
             .catch(err => {
                 console.log("err", err);
                 if (err.response.status === 400) {
@@ -72,13 +69,9 @@ const Loginform = () => {
                 }
             }
             )
-
-
     };
-
-
     useEffect(() => {
-        // if user already logged in, redirect to home page
+        // if user already logged in, redirect to home page and other conditions setting
         if (localStorage.getItem('user')) {
             let user = JSON.parse(localStorage.getItem('user'));
             if (user.group == "admin") {
@@ -92,8 +85,10 @@ const Loginform = () => {
             }
         }
     }, [navigate]);
-
     return (
+        <>
+                    <Navbar />
+
         <div className='FormContainer' >
             <Box
                 component="img"
@@ -107,13 +102,9 @@ const Loginform = () => {
                 }}
                 src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
             />
-
-
-
             <form onSubmit={handleSubmit} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Grid container alignItems="center" justify="center" display='flex' direction='column'>
-
-
+                    {/* // setting up the login form and placing place holders */}
                     <TextField
                         required
                         id="email-input"
@@ -125,7 +116,6 @@ const Loginform = () => {
                         onChange={handleInputChange}
                         sx={{ width: '30%', margin: '10px' }}
                     />
-
                     <TextField
                         required
                         id="password-input"
@@ -137,28 +127,21 @@ const Loginform = () => {
                         onChange={handleInputChange}
                         sx={{ width: '30%', margin: '10px' }}
                     />
-
                     <div style={{ flexDirection: 'row', display: 'flex', marginTop: '5vh' }} >
-
                         <Button variant="contained" color="primary" type="submit" sx={{ marginRight: '20px', width: '7vw' }}>
                             Login
                         </Button>
-
                         <Button variant="contained" color="primary" type="submit" sx={{ marginLeft: '20px', width: '8vw' }}
                             onClick={() => { navigate("/register", {}); }}
                         >
                             Register
                         </Button>
-
-
-
                     </div>
-
                 </Grid>
             </form>
         </div>
+        </>
+
     );
-
 };
-
 export default Loginform;

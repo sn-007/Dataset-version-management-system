@@ -3,20 +3,15 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import { useNavigate } from "react-router-dom"
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../templates/Card';
-
-// import SearchBar from 'material-ui-search-bar';
-
 import Navbar from '../templates/Navbar';
-
-
 
 export default function Datasetsdisplayhome() {
     let navigate = useNavigate();
     let [datasets, setDatasets] = useState([]);
-    
+//setting redirection routes for various system users
     useEffect(() => {
         if (localStorage.getItem('user')) {
             let user = JSON.parse(localStorage.getItem('user'));
@@ -31,9 +26,9 @@ export default function Datasetsdisplayhome() {
         }
     }, [navigate]);
 
-    // make request to "api/api/datasets/" to get all the datasets and store them in datasets
+    // make request to "http://10.1.38.115:8000/api/datasets/" to get all the datasets and store them in datasets
     useEffect(() => {
-        axios.get("/api/api/datasets/", {
+        axios.get("http://10.1.38.115:8000/api/datasets/", {
             headers: {}
         })
             .then(res => {
@@ -43,7 +38,7 @@ export default function Datasetsdisplayhome() {
             .catch(err => {
                 console.log("err", err);
             });
-    }, []); 
+    }, []);
 
 
     return (
@@ -51,23 +46,20 @@ export default function Datasetsdisplayhome() {
         <div className="myDatasets" >
             <Navbar />
 
-            <div className="myDatasets-heading" style={{marginTop:'10vh'}}>
-                <h2 style={{fontSize:'xx-large'}}>DATA FOUNDATION</h2>
+            <div className="myDatasets-heading" style={{ marginTop: '10vh' }}>
+                <h2 style={{ fontSize: 'xx-large' }}>DATA FOUNDATION</h2>
             </div>
 
             <div className="myDatasets-list">
                 <Stack direction="row" spacing={2} justifyContent="right" alignItems="flex-end" sx={{ "margin": '10px' }}>
 
-                    <Button variant="contained" color="info" onClick={ () => { navigate("/login"); } }>Login</Button>
-                    <Button variant="outlined"  color="info" onClick={ () => { navigate("/register");}}>Register</Button>
-                    
+                    <Button variant="contained" color="info" onClick={() => { navigate("/login"); }}>Login</Button>
+                    <Button variant="outlined" color="info" onClick={() => { navigate("/register"); }}>Register</Button>
+
 
                 </Stack>
-                {/* <SearchBar />
-
-                <br /><br /><br /> */}
-
-                <List className='list' sx={{ width: '100%', alignSelf:'center', justifyContent:'center', alignItems:'center' }}>
+                {/*  mapping the various datasets to display on card */}
+                <List className='list' sx={{ width: '100%', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
                     {
                         datasets.map(
                             (dataset, index) => {
