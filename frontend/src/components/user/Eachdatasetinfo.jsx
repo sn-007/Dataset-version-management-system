@@ -55,9 +55,9 @@ export default function Eachdatasetdatasetinfo() {
     };
     const [dataset, setDataset] = useState(defaultDataset);
     const [publisher, setPublisher] = React.useState(false);
-
+//rewuest to get dataset with a particular ID from backend
     useEffect(() => {
-        axios.get("api/api/datasets/" + params.id, {
+        axios.get("http://10.1.38.115:8000/api/datasets/" + params.id, {
             headers: {}
         })
 
@@ -80,21 +80,13 @@ export default function Eachdatasetdatasetinfo() {
 
             }
         }
-
-
     }, []);
 
-
-
-
-
     return (
+        <div className='info-container1'>
+        <Navbar />
 
         <div className='info-container'>
-
-
-            <Navbar />
-
 
             <div className='info-heading'>
                 <h1>{dataset.name}</h1>
@@ -102,11 +94,7 @@ export default function Eachdatasetdatasetinfo() {
 
             {/*render a table to show the information of the dataset with coloumns as headers*/}
             <div className="info-table-container">
-
-
-
                 <Table aria-label="simple table">
-
                     <TableRow>
                         <TableCell className='info-table-head'><b>Name</b></TableCell>
                         <TableCell>{dataset.name}</TableCell>
@@ -127,12 +115,8 @@ export default function Eachdatasetdatasetinfo() {
                         <TableCell className='info-table-head'><b>Source</b></TableCell>
                         <TableCell><a target='_blank' href={dataset.source} style={{ cursor: 'pointer', color: 'green' }}>{dataset.source}</a></TableCell>
                     </TableRow>
-
-
                 </Table>
-
             </div>
-
             <div className='info-version-heading'>
                 <h1>Versions</h1>
                 {publisher &&
@@ -140,11 +124,7 @@ export default function Eachdatasetdatasetinfo() {
 
                 }
             </div>
-
-
-
-
-
+            {/* Mapping the various versions of the datasets onto the dataset page */}
             <List className='list' sx={{ width: '100%' }}>
                 {
                     dataset.versions.map(
@@ -157,15 +137,8 @@ export default function Eachdatasetdatasetinfo() {
                     )
                 }
             </List>
-
-
-
-
-
         </div>
-
-
-
+        </div>
 
     );
 }

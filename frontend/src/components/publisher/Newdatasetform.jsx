@@ -10,12 +10,10 @@ import { Audio } from 'react-loader-spinner';
 import { TailSpin } from "react-loader-spinner";
 import Navbar from '../templates/Navbar';
 import './index.css';
-
-
-
 import Button from "@mui/material/Button";
 import { useAlert } from "react-alert";
 
+// form for publisher to enter new data set
 const defaultValues = {
     name: "",
     description: "",
@@ -28,7 +26,7 @@ const defaultValues = {
 };
 const Newdatasetform = () => {
     let navigate = useNavigate();
-
+//check if user is publsiher only then give access else redirect to login page
     React.useEffect(() => {
         if (localStorage.getItem('user')) {
             let user = JSON.parse(localStorage.getItem('user'));
@@ -46,9 +44,6 @@ const Newdatasetform = () => {
             navigate("/login");
         }
     }, [navigate]);
-
-
-
 
     const alert = useAlert();
     const [formValues, setFormValues] = useState(defaultValues);
@@ -91,11 +86,6 @@ const Newdatasetform = () => {
             alert.show("Please select a file", { type: 'error' });
             return;
         }
-        
-
-
-
-
 
 
         //post these dataset to the url 10.1.38.115:8000/api/tempdatasets/
@@ -109,13 +99,13 @@ const Newdatasetform = () => {
 
         let url = backendConstants.url + "tempdatasets/";
         setLoad(true);
-        axios.post('api/api/tempdatasets/', formData, {
+        //sending data to backend for storage
+        axios.post('http://10.1.38.115:8000/api/tempdatasets/', formData, {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
             }
         },
             {
-
             }
         )
             .then(res => {
@@ -145,12 +135,7 @@ const Newdatasetform = () => {
 
     return (
         <div className='myDatasets'>
-
             <Navbar />            
-            
-                
-
-
             <Box
                 component="img"
                 sx={{
@@ -165,19 +150,13 @@ const Newdatasetform = () => {
                 src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
             />
 
-            
-
-
             <div className="myDatasets-heading">
-                
 
-            
-            
                 <h2>NEW DATASET UPLOAD</h2>
             </div>
             <form onSubmit={handleSubmit} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Grid container alignItems="center" justify="center" display='flex' direction='column'>
-
+{/* //form forentering new dataset details */}
 
 
                     <TextField
@@ -260,10 +239,6 @@ const Newdatasetform = () => {
                         </div>
 
                     }
-
-
-
-
 
                 </Grid>
             </form>

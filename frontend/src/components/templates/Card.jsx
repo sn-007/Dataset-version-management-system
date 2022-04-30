@@ -1,11 +1,7 @@
 import React from 'react'
 import './card.css'
 import { useNavigate } from 'react-router';
-//alert from react-alert
 import { useAlert } from 'react-alert'
-
-
-
 
 const trim = (str, maxLength) => {
     if (str.length > maxLength) {
@@ -14,19 +10,12 @@ const trim = (str, maxLength) => {
         return str;
     }
 }
-
 //capitalize first letter of every word in a string
 const capitalize = (str) => {
     return str.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 }
-
-
-
-
-
-
 
 export default function Card({ info, block }) {
     const navigate = useNavigate();
@@ -51,7 +40,7 @@ export default function Card({ info, block }) {
 
         }>
 
-
+{/* //printing the card contents in a structured manner */}
             <div className='card-content'>
                 <div className="admin-title">
                     <h3 ><u>{capitalize(info.name)}</u></h3>
@@ -65,17 +54,12 @@ export default function Card({ info, block }) {
 
             <div className="btn" onClick={(e) => { e.stopPropagation(); }}>
 
-
+{/* //view Datatset soruce links */}
                 <button className='source'>
                     <a href={info.source} target='_blank'>
                         SOURCE
                     </a>
                 </button>
-
-
-
-
-
                 <button className='viewmore'
                     onClick={(e) => {
                         e.stopPropagation();
@@ -94,24 +78,12 @@ export default function Card({ info, block }) {
                     </a>
                 </button>
 
-
-
                 <button>
                     <a className='download' onClick={(e) => { e.stopPropagation(); }} href={info.reference} target='_blank'>
                         DOWNLOAD
                     </a>
                 </button>
-
-
-
-
-
-
             </div>
-
         </div>
-
-
-
     )
 }

@@ -1,46 +1,19 @@
-import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import CssBaseline from "@mui/material/CssBaseline";
-import { makeStyles, useTheme } from "@material-ui/core/styles"
-import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-import DrawerComponent from "./Drawer";
-import { Button } from "@mui/material";
-import Stack from '@mui/material/Stack';
+import React, { useState } from "react";
+import { ReactComponent as CloseMenu } from "./x.svg";
+import { ReactComponent as MenuIcon } from "./menu.svg";
+import "./header.css";
 import { useNavigate } from "react-router-dom"
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
 import axios from "axios";
 
-import Divider from '@mui/material/Divider';
-const useStyles = makeStyles((theme) => ({
-    navlinks: {
-        marginLeft: theme.spacing(5),
-        display: "flex",
-    },
-    logo: {
-        flexGrow: "1",
-        cursor: "pointer",
-    },
-    link: {
-        textDecoration: "none",
-        color: "white",
-        fontSize: "20px",
-        marginLeft: theme.spacing(20),
-        "&:hover": {
-            color: "yellow",
-            borderBottom: "1px solid white",
-        },
-    },
-}));
+ import IconButton from '@mui/material/IconButton';
+ import Avatar from '@mui/material/Avatar';
 
-function Navbar() {
-    const classes = useStyles();
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const Navbar = () => {
+  const [click, setClick] = useState(false);
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
     const navigate = useNavigate();
 
     const [publisher, setPublisher] = React.useState(false);
@@ -67,22 +40,9 @@ function Navbar() {
 
     }, []);
 
-
-    const sendMessage = () => {
-        navigate("/newdataset");
-    }
-
-    const sendMessage1 = () => {
-        navigate("/mydatasets");
-    }
-
-    const sendMessage3 = () => {
-        navigate("/mypendingdatasets");
-    }
-
     const sendMessage2 = () => {
 
-        axios.get("api/users/logout/",
+        axios.get("http://10.1.38.115:8000/users/logout/",
             {
                 headers: {
                     'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
@@ -100,106 +60,62 @@ function Navbar() {
                 console.log(err);
             });
     }
-    return (
-        <AppBar position="static">
-            <CssBaseline />
-            <Toolbar>
-                <IconButton >
-                    <Avatar alt="IIITH" src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png" variant="square" />
-                </IconButton>
+  return (
+    <div className="header">
+      <div className="logo-nav">
+        <div className="logo-container">
+          <a onClick={() => navigate(`/`)}>
+                           <IconButton >
+                     <Avatar alt="IIITH" src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png" variant="square" />
+              </IconButton>          </a>
+        </div>
 
-                {isMobile ? (
-                    <DrawerComponent />
-                ) : (
-                    <Stack direction="row" spacing={6} justifyContent="left" >
+                <ul className={click ? "nav-options active" : "nav-options"}>
+                    { 
+                    publisher &&
+                    <li className="option" onClick={closeMobileMenu}>
 
-                        <Button onClick={() => { }}
-                            sx={{
-                                my: 2, color: 'white', display: 'none', "&:hover": {
-                                    backgroundColor: 'white',
-                                    color: 'blue',
-                                }
-                            }}>
-
-                            New Data Set
-                        </Button>
-
-                        {
-                            publisher &&
-
-                            <Button onClick={sendMessage}
-                                sx={{
-                                    my: 2, color: 'white', display: 'block', "&:hover": {
-                                        backgroundColor: 'white',
-                                        color: 'blue',
-                                    }
-                                }}>
-
-                                New Data Set
-                            </Button>
-
-                        }
-
-                        {
-                            publisher &&
-                            <Button onClick={sendMessage1}
-
-                                sx={{
-                                    my: 2, color: 'white', display: 'block', "&:hover": {
-                                        backgroundColor: 'white',
-                                        color: 'blue',
-                                    }
-                                }}
-                            >
-                                My Data Sets
-                            </Button>
-
-                        }
-
-                        {
-                            publisher &&
-                            <Button onClick={sendMessage3}
-
-                                sx={{
-                                    my: 2, color: 'white', display: 'block', "&:hover": {
-                                        backgroundColor: 'white',
-                                        color: 'blue',
-                                    }
-                                }}
-                            >
-                                Pending Data Sets
-                            </Button>
-
-                        }
-
-
-
-
-
-                        {
-                            !unauth &&
-                            <Button onClick={sendMessage2}
-
-                                sx={{
-                                    my: 2, color: 'white', display: 'block', "&:hover": {
-                                        backgroundColor: 'white',
-                                        color: 'blue',
-                                    }
-                                }}
-                            >
-                                Logout
-                            </Button>
-
-                        }
-
-
-
-
-                    </Stack>
-
-                )}
-            </Toolbar>
-        </AppBar>
-    );
+            <h4 onClick={() => navigate(`/newdataset`)}>NEW DATA SET</h4>
+          </li>
 }
+{
+                             publisher &&
+
+          <li className="option" onClick={closeMobileMenu}>
+            <h4 onClick={() => navigate(`/mydatasets`)}>MY DATA SETS</h4>
+          </li>
+}
+{
+                            publisher &&
+
+          <li className="option" onClick={closeMobileMenu}>
+            <h4 onClick={() => navigate(`/mypendingdatasets`)}>PENDING DATASETS</h4>
+          </li>
+}
+{
+                            !unauth &&
+
+          <li className="option" onClick={closeMobileMenu}>
+            <h4 onClick={sendMessage2}>LOGOUT</h4>
+          </li>
+}
+        </ul>
+      </div>
+      { 
+      !unauth &&
+
+      <div className="mobile-menu" onClick={handleClick}>
+        {click ? (
+          <CloseMenu className="menu-icon" />
+        ) : (
+          <MenuIcon className="menu-icon" />
+        )}
+        
+      </div>
+}
+    </div>
+        
+  );
+};
+
 export default Navbar;

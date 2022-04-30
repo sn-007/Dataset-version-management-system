@@ -9,10 +9,7 @@ import backendConstants from "./backendConstants";
 import { useAlert } from 'react-alert'
 
 import "./index.css";
-
-
-
-
+import Navbar from "./Navbar";
 //register form for publisher, we need name, username, email, password, confirm password
 
 const defaultValues = {
@@ -51,7 +48,7 @@ const Registerform = () => {
         // http POST ":8000/users/register/"
         let url = backendConstants.url + "users/register/";
         console.log(url)
-        axios.post("api/users/register/", formValues)
+        axios.post("http://10.1.38.115:8000/users/register/", formValues)
             .then(res => {
                 let user = res.data;
                 localStorage.setItem("user", JSON.stringify(user));
@@ -73,18 +70,13 @@ const Registerform = () => {
                 else{
                     alert.show(err.response.message,{type:'error'});
                 }
-            }
-                    
-                
-                
+            }  
             );
-        
-
-
-
     };
 
     return (
+        <>
+        <Navbar />
         <div className='FormContainer'>
             <Box
                 component="img"
@@ -94,8 +86,6 @@ const Registerform = () => {
                     maxHeight: { xs: 233, md: 167 },
                     maxWidth: { xs: 350, md: 250 },
                     alignSelf: "center",
-
-
                 }}
                 src="https://d1hl0z0ja1o93t.cloudfront.net/wp-content/uploads/2017/04/21165916/logo2.png"
             />
@@ -104,7 +94,7 @@ const Registerform = () => {
                 <Grid container alignItems="center" justify="center" display='flex' direction='column'>
 
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-
+{/* setting up the registration form for publisher and admin  */}
                         <TextField
                         required
                             id="first_name-input"
@@ -192,7 +182,7 @@ const Registerform = () => {
                         >
                             Register
                         </Button>
-
+{/* //Navigationa and data sending to the back end */}
                         <Button variant="contained" color="primary" sx={{ marginLeft: '20px', width: '7vw' }}
                             onClick={() => { navigate("/login", {}); }}
                         >
@@ -207,6 +197,8 @@ const Registerform = () => {
                 </Grid>
             </form>
         </div>
+        </>
+
     );
 };
 

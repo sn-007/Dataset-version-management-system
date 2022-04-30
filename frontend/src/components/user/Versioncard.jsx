@@ -2,9 +2,6 @@ import React from 'react'
 import './Versioncard.css'
 import { useNavigate } from 'react-router';
 
-
-
-
 const trim = (str, maxLength) => {
     if (str.length > maxLength) {
         return str.slice(0, maxLength) + '........';
@@ -29,18 +26,9 @@ const convertDate = (date) => {
     return day + "/" + month + "/" + year;
 }
 
-
-
-
-
-
-
-export default function Versioncard({info}) {
-    const navigate= useNavigate();
+export default function Versioncard({ info }) {
+    const navigate = useNavigate();
     return (
-        
-        
-
         <div className='version-card-container' onClick={
             (e) => {
                 //check if the target is a button or not
@@ -50,14 +38,12 @@ export default function Versioncard({info}) {
                 }
                 else {
                     //alert('navigated');
-
-                    
                 }
             }
 
         }>
 
-
+            {/* Printing Dataset's Version info */}
             <div className='version-card-content'>
                 <div className="admin-title">
                     <h3 ><u>{capitalize("Version " + info.version)}</u></h3>
@@ -71,25 +57,17 @@ export default function Versioncard({info}) {
                 <div className="version-date">
                     <p>Updated on : {convertDate(info.date)}</p>
                 </div>
-
-                
-
             </div>
 
             <div className="version-btn" onClick={(e) => { e.stopPropagation(); }}>
 
-
+                {/* //To downlaod the Dataset Version */}
                 <button className='Download'>
                     <a href={info.reference} target='_blank'>
                         Download
                     </a>
                 </button>
-
             </div>
-
         </div>
-
-
-        
     )
 }
