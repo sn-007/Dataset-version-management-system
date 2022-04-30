@@ -43,25 +43,8 @@ export default function Eachtempdatasetinfo() {
     const alert = useAlert();
     const [load, setLoad] = useState(false);
 
-
-    // useEffect(() => {
-    //     const initialValue = document.body.style.zoom;
-
-    //     // Change zoom level on mount
-    //     document.body.style.zoom = "120%";
-
-    //     return () => {
-    //       // Restore default value
-    //       document.body.style.zoom = initialValue;
-    //     };
-    //   }, []);
     const handleReject = (info) => {
-
-
-
-
-
-        let url = 'api/api/reject/' + info.id;
+        let url = 'http://10.1.38.115:8000/api/reject/' + info.id;
         setLoad(true);
         axios.get(url, {
             headers: {
@@ -86,19 +69,13 @@ export default function Eachtempdatasetinfo() {
                 else {
                     alert.show(err.response.data.detail, { type: 'error' });
                 }
-
-
-
-
             }
             )
 
     };
 
     const handleAccept = (info) => {
-
-
-        let url = 'api/api/accept/' + info.id;
+        let url = 'http://10.1.38.115:8000/api/accept/' + info.id;
         setLoad(true);
         axios.get(url, {
             headers: {
@@ -132,9 +109,6 @@ export default function Eachtempdatasetinfo() {
 
     }
 
-
-
-
     const defaultDataset = {
         'name': 'Dataset 1',
         'description': 'This is the first dataset',
@@ -151,12 +125,11 @@ export default function Eachtempdatasetinfo() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        axios.get("api/api/tempdatasets/" + params.id, {
+        axios.get("http://10.1.38.115:8000/api/tempdatasets/" + params.id, {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
             }
         })
-
             .then(res => {
                 console.log("res", res.data);
                 setDataset(res.data);
@@ -174,17 +147,13 @@ export default function Eachtempdatasetinfo() {
         }
     }, []);
 
-
-
-
-
     return (
-
+        <>
+                    <Navbar />
 
         <div className='tempContainer'>
 
 
-            <Navbar />
 
 
             <div className='heading'>
@@ -193,11 +162,7 @@ export default function Eachtempdatasetinfo() {
 
             {/*render a table to show the information of the dataset with coloumns as headers*/}
             <div className="table-container">
-
-
-
                 <Table aria-label="simple table">
-
                     <TableRow>
                         <TableCell className='table-head'><b>Name</b></TableCell>
                         <TableCell>{dataset.name}</TableCell>
@@ -223,28 +188,18 @@ export default function Eachtempdatasetinfo() {
                         <TableCell className='table-head'><b>File</b></TableCell>
                         <TableCell><a target='_blank' href={dataset.reference} style={{ cursor: 'pointer', color: 'green' }}>Download</a></TableCell>
                     </TableRow>
-
-
                 </Table>
-
-
-
             </div>
 
 
             <div className='button-container'>
-
                 <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'red' }} startIcon={<ClearIcon />} onClick={(e) => { handleReject(dataset); }} disabled={load}>
                     Reject
                 </Button>
-
                 <Button variant="contained" size='large' sx={{ color: 'white', backgroundColor: 'green' }} endIcon={<CheckIcon />} onClick={(e) => { handleAccept(dataset); }} disabled={load}>
                     Accept
                 </Button>
-
-
             </div>
-
             {
                         load &&
 
@@ -260,25 +215,11 @@ export default function Eachtempdatasetinfo() {
                             }}
                         >
                             <TailSpin color="#00BFFF" height={160} width={160} ariaLabel='loading' />
-                            
                         </div>
 
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
+        </>
 
     );
 }

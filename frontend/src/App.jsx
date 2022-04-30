@@ -5,9 +5,6 @@ import {
   Route
 } from "react-router-dom";
 
-
-
-
 import './App.css';
 import Approverejects from "./components/admin/Approverejects";
 import Mydatasets from './components/publisher/Mydatsets';
@@ -20,10 +17,6 @@ import Versionupdate from './components/publisher/Versionupdate';
 import Eachtempdatasetinfo from './components/admin/EachTempDatasetinfo';
 import Card from './components/templates/Card';
 import Mypendingdatasets from './components/publisher/Mypendingdatasets';
-
-
-
-
 
 function App() {
   return (

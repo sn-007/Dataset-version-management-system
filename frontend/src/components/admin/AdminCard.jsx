@@ -1,3 +1,4 @@
+//admin home card to display approve/reject
 import React from 'react'
 import { useNavigate } from 'react-router';
 import './AdminCard.css'

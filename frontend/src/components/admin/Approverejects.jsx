@@ -57,12 +57,12 @@ function Approverejects() {
     }, [navigate]);
 
 
-    //make get request to ""api/api/tempdatasets/" to get all the datasets and store it in datasets
+    //make get request to ""http://10.1.38.115:8000/api/tempdatasets/" to get all the datasets and store it in datasets
     useEffect(() => {
         
 
         if (localStorage.getItem('user')) {
-            axios.get("api/api/tempdatasets/", {
+            axios.get("http://10.1.38.115:8000/api/tempdatasets/", {
                 headers: {
                     'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
 
@@ -90,7 +90,7 @@ function Approverejects() {
     
     return (
 
-
+//making an approve reject form in front-end
 
         <div>
             <Navbar />
@@ -99,7 +99,7 @@ function Approverejects() {
                 <h2>APPROVE/REJECT</h2>
             </div>
 
-            
+            {/* //mapping the datasets that require approval or rejection */}
             <div className="approverejects-list">
                 <List className='list' sx={{ width: '100%', alignSelf:'center', justifyContent:'center', alignItems:'center' }}>
                     {

@@ -18,7 +18,7 @@ export default function Mydatasets() {
     
     let navigate = useNavigate();
     let [datasets, setDatasets] = useState([]);
-
+//setting conditions based on user authentication==publisher
     useEffect(() => {
         if (localStorage.getItem('user')) {
             let user = JSON.parse(localStorage.getItem('user'));
@@ -34,10 +34,10 @@ export default function Mydatasets() {
     }, [navigate]);
 
     useEffect(() => {
-        
+        //retreiving the data from the backend 
 
         if (localStorage.getItem('user') !== null) {
-        axios.get("api/api/datasets/", {
+        axios.get("http://10.1.38.115:8000/api/datasets/", {
             headers: {
                 'Authorization': 'Token ' + JSON.parse(localStorage.getItem('user')).token,
                 
@@ -69,7 +69,7 @@ export default function Mydatasets() {
             <div className="myDatasets-heading" style={{marginTop:'20vh'}}>
                 <h2>MY DATASETS</h2>
             </div>
-            
+            {/* //mapping the datasets if the particular publsiher to the Card */}
 
                 <List className='list' sx={{width: '100%', justifyContent:'center', alignItems:'center' }}>
                     {
