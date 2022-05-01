@@ -5,6 +5,9 @@ import {
   Route
 } from "react-router-dom";
 
+
+
+
 import './App.css';
 import Approverejects from "./components/admin/Approverejects";
 import Mydatasets from './components/publisher/Mydatsets';
@@ -17,6 +20,10 @@ import Versionupdate from './components/publisher/Versionupdate';
 import Eachtempdatasetinfo from './components/admin/EachTempDatasetinfo';
 import Card from './components/templates/Card';
 import Mypendingdatasets from './components/publisher/Mypendingdatasets';
+
+
+
+
 
 function App() {
   return (
@@ -33,7 +40,7 @@ function App() {
         <Route path="/register" element={<Registerform />} />
         <Route path="/:id" element={<Eachdatasetinfo />} />
         <Route path="/newversion/:id" element={<Versionupdate />} />
-        <Route path="/admincheck/:id" element={<Eachtempdatasetinfo />} />
+        <Route path="/check/:id" element={<Eachtempdatasetinfo />} />
         <Route path="/card" element={<Card />} />
         <Route path="/mypendingdatasets" element={<Mypendingdatasets />} />
 
